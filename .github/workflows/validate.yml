@@ -1,0 +1,40 @@
+name: validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate marketplace and plugin manifests
+        run: python3 tools/validate.py
+
+      - name: Byte-compile skill scripts
+        run: python3 -m py_compile hameshabetz/skills/hameshabetz/scripts/*.py
+
+      - name: Check version consistency
+        run: |
+          set -euo pipefail
+          root_version="$(cat VERSION)"
+          echo "VERSION file: $root_version"
+          for f in \
+            skill-packager.json \
+            hameshabetz/.claude-plugin/plugin.json ; do
+            v="$(python3 -c "import json,sys; print(json.load(open('$f'))['version'])")"
+            echo "$f: $v"
+            test "$v" = "$root_version" || { echo "::error::$f version ($v) != VERSION ($root_version)"; exit 1; }
+          done
+          mv="$(python3 -c "import json; print(json.load(open('.claude-plugin/marketplace.json'))['metadata']['version'])")"
+          echo ".claude-plugin/marketplace.json: $mv"
+          test "$mv" = "$root_version" || { echo "::error::marketplace.json version ($mv) != VERSION ($root_version)"; exit 1; }

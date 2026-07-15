@@ -1,0 +1,36 @@
+{
+  "name": "claude-lamora",
+  "owner": {
+    "name": "Yaniv Golan",
+    "email": "yaniv@lool.vc"
+  },
+  "metadata": {
+    "description": "המשבץ — שיבוץ שכבה לכיתות מאוזנות מתוך טופס בחירת חברים: פיוס שמות בעברית, אילוצים (לא-עם, עוגנים, שילוב, איזון גנים ומגדר), אופטימיזציית CP-SAT, לוח גרירה בעברית ואקסל סופי.",
+    "version": "1.2.0",
+    "pluginRoot": "./hameshabetz",
+    "displayName": "קלוד-למורה"
+  },
+  "plugins": [
+    {
+      "name": "hameshabetz",
+      "source": "./hameshabetz",
+      "description": "המשבץ — שיבוץ שכבה לכיתות מאוזנות מתוך טופס בחירת חברים: פיוס שמות בעברית, אילוצים (לא-עם, עוגנים, שילוב, איזון גנים ומגדר), אופטימיזציית CP-SAT, לוח גרירה בעברית ואקסל סופי.",
+      "author": {
+        "name": "Yaniv Golan",
+        "email": "yaniv@lool.vc"
+      },
+      "category": "education",
+      "tags": [
+        "שיבוץ-כיתות",
+        "education",
+        "hebrew",
+        "school",
+        "class-placement",
+        "sociometric",
+        "cp-sat",
+        "rtl"
+      ],
+      "displayName": "המשבץ"
+    }
+  ]
+}

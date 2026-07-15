@@ -1,0 +1,54 @@
+name: release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate before packaging
+        run: |
+          python3 tools/validate.py
+          python3 -m py_compile hameshabetz/skills/hameshabetz/scripts/*.py
+
+      - name: Verify tag matches VERSION
+        run: |
+          set -euo pipefail
+          tag="${GITHUB_REF_NAME#v}"
+          file="$(cat VERSION)"
+          echo "tag=$tag VERSION=$file"
+          test "$tag" = "$file" || { echo "::error::tag v$tag does not match VERSION ($file)"; exit 1; }
+
+      - name: Package plugin
+        run: |
+          set -euo pipefail
+          version="$(cat VERSION)"
+          # Plugin-only archive (what users install from the marketplace).
+          zip -r "hameshabetz-${version}.zip" hameshabetz -x '*/__pycache__/*'
+          # Full marketplace archive.
+          zip -r "claude-lamora-${version}.zip" \
+            .claude-plugin hameshabetz README.md LICENSE CHANGELOG.md VERSION VERSIONING.md \
+            -x '*/__pycache__/*'
+          ls -la ./*.zip
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: קלוד-למורה ${{ github.ref_name }}
+          generate_release_notes: true
+          files: |
+            hameshabetz-*.zip
+            claude-lamora-*.zip

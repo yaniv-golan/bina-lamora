@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+<head>
+<meta charset="utf-8">
+<title>לוח שיבוץ כיתות</title>
+<style>
+  :root { --bg:#f4f1ea; --card:#ffffff; --ink:#232019; --line:#d9d2c3; --ok:#2e9e5b; --bad:#d64545; --none:#9a938a; --anchor:#8a6d1f; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:"Segoe UI", Arial, sans-serif; background:var(--bg); color:var(--ink); }
+  header { padding:10px 16px; background:#fff; border-bottom:2px solid var(--line); display:flex; gap:16px; align-items:center; flex-wrap:wrap; position:sticky; top:0; z-index:5; }
+  header h1 { font-size:18px; margin:0 0 0 8px; }
+  .stat { font-size:13px; background:var(--bg); border:1px solid var(--line); border-radius:8px; padding:4px 10px; }
+  button { font-family:inherit; font-size:13px; padding:6px 14px; border-radius:8px; border:1px solid var(--line); background:#fff; cursor:pointer; }
+  button.primary { background:#2b5fb8; color:#fff; border-color:#2b5fb8; }
+  button:disabled { opacity:.35; cursor:default; }
+  #legend { display:flex; gap:8px; flex-wrap:wrap; font-size:12px; align-items:center; }
+  .swatch { display:inline-block; width:12px; height:12px; border-radius:3px; margin-left:4px; vertical-align:-2px; }
+  .swatch.anchorline { background:#fff; border-right:4px solid var(--anchor); border-radius:0; width:8px; }
+  #board { display:flex; gap:12px; padding:14px; align-items:flex-start; overflow-x:auto; }
+  .col { background:#eae4d8; border:1px solid var(--line); border-radius:12px; min-width:230px; flex:1; padding:8px; }
+  .col.dragover { outline:3px dashed #2b5fb8; }
+  .col h2 { font-size:15px; margin:2px 4px 2px; display:flex; justify-content:space-between; }
+  .colstats { font-size:11.5px; color:#555; margin:0 4px 6px; min-height:15px; }
+  .ganbar { display:flex; height:8px; border-radius:4px; overflow:hidden; margin:0 4px 8px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:5px 8px; margin:5px 2px; cursor:grab; display:flex; align-items:center; gap:6px; font-size:13.5px; border-right-width:6px; }
+  .card.dragging { opacity:.4; }
+  .card .dot { width:10px; height:10px; border-radius:50%; flex:none; }
+  .card .nm { flex:1; }
+  .card .lock { border:none; background:none; padding:0 2px; font-size:13px; opacity:.35; }
+  .card.locked { background:#eef3fb; }
+  .card.locked .lock { opacity:1; }
+  .card.anchor { border-left:4px solid var(--anchor); }
+  .card.hl-friend { box-shadow:0 0 0 3px #2b5fb8; }
+  .card.hl-chooser { box-shadow:0 0 0 3px #b88a2b; }
+  .card.selected { box-shadow:0 0 0 3px #111; }
+  .card.dim { opacity:.22; }
+  .card.violation { border-color:var(--bad); background:#fdf1f1; }
+  .card .warn { font-size:12px; }
+  .verchip { font-size:13px; font-weight:600; background:#2b5fb8; color:#fff; border-radius:8px; padding:4px 10px; }
+  .verchip.draft { background:#b8862b; }
+  #search { font-family:inherit; font-size:13px; padding:5px 10px; border:1px solid var(--line); border-radius:8px; width:150px; }
+  #restoreNote { display:none; background:#fdf6dd; border-bottom:1px solid #e5d9a8; padding:8px 16px; font-size:13.5px; }
+  #restoreNote button { margin-inline-start:10px; }
+  #selInfo { display:none; background:#eef3fb; border-bottom:1px solid #c9d7ef; padding:7px 16px; font-size:13.5px; }
+  #selInfo .viol { color:var(--bad); }
+  .ring { display:inline-block; padding:1px 7px; border-radius:8px; background:#fff; border:2px solid #2b5fb8; margin:0 2px; }
+  .ring.gold { border-color:#b88a2b; }
+  .card .warn { cursor:pointer; }
+  #toast { display:none; position:fixed; bottom:18px; right:50%; transform:translateX(50%); background:#3a3327; color:#fff; padding:10px 18px; border-radius:10px; font-size:14px; z-index:20; max-width:min(560px,90vw); text-align:center; }
+  #modal { display:none; position:fixed; inset:0; background:rgba(0,0,0,.45); z-index:10; align-items:center; justify-content:center; }
+  #modal .box { background:#fff; border-radius:12px; padding:18px; width:min(640px,92vw); }
+  .choice { border:1px solid var(--line); border-radius:10px; padding:10px 12px; margin:8px 0; }
+  #dlOk { display:none; background:#e8f6ec; border:1px solid #bfe3ca; border-radius:8px; padding:8px 10px; margin:8px 0; font-size:13.5px; }
+  textarea { width:100%; height:150px; direction:ltr; font-family:monospace; font-size:12px; margin-top:6px; }
+  .hint { font-size:12px; color:#666; }
+  .linkbtn { border:none; background:none; padding:0; color:#2b5fb8; text-decoration:underline; cursor:pointer; font-size:13px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>לוח שיבוץ כיתות</h1>
+  <span class="verchip" id="verChip"></span>
+  <span class="stat" id="totalStat"></span>
+  <span class="stat" id="satStat"></span>
+  <span id="legend"></span>
+  <span style="flex:1"></span>
+  <input id="search" type="search" placeholder="חיפוש ילד..." oninput="render()">
+  <button id="undoBtn" onclick="doUndo()" disabled>↩ ביטול פעולה</button>
+  <button id="resetBtn" onclick="resetBoard(this)">חזרה לפתרון המקורי</button>
+  <button id="saveBtn" class="primary" onclick="openExport()">שמירה ושליחה ל-Claude</button>
+</header>
+<div id="restoreNote">הלוח ממשיך מהשינויים האחרונים שנעשו כאן במחשב הזה. רוצות להתחיל נקי?
+  <button onclick="resetBoard(this)">חזרה לפתרון המקורי</button>
+</div>
+<div id="selInfo"></div>
+<div id="board"></div>
+<p class="hint" id="hintLine" style="padding:0 16px 14px">גררו כרטיס בין כיתות (ילד שגררתן ננעל 🔒 אוטומטית — כך החישוב הבא לא יזיז אותו; לביטול לחצו על המנעול) · לחיצה על כרטיס מציגה למעלה את החברים שבחר (מסומנים כחול) ואת מי שבחר בו (זהוב) · 🔒 נועל ילד לכיתה · פס בצד = נקבע מראש · ⚠ = סותר כלל, לחצו עליו לפרטים · נקודה ירוקה = יש חבר איתו בכיתה, אדומה = אין, אפורה = לא נמצאו בחירות בטופס.<br>
+<b>חשוב:</b> השינויים נשמרים רק בדפדפן הזה, במחשב הזה. לפני מעבר למחשב אחר או שליחה — לחצו על "שמירה ושליחה ל-Claude" והורידו את הקובץ.</p>
+<div id="toast"></div>
+<div id="modal"><div class="box">
+  <h3>שמירה ושליחה</h3>
+  <div class="choice"><b>להמשיך לעבוד עם Claude</b><br>
+    <button class="primary" style="margin-top:6px" onclick="downloadState()">הורדת קובץ שינויים</button>
+    <div class="hint">גררו את הקובץ שירד לתוך השיחה עם Claude (או לחצו על סמל הצירוף 📎/+ ובחרו אותו) וכתבו: "תעדכני את השיבוץ לפי הקובץ".</div>
+  </div>
+  <div id="dlOk"></div>
+  <div class="choice"><b>רשימה להדפסה או לעיון</b> <span class="hint">— לא לשליחה ל-Claude</span><br>
+    <button style="margin-top:6px" onclick="downloadCsv()">הורדת רשימה (CSV)</button>
+  </div>
+  <div class="choice">
+    <button class="linkbtn" onclick="toggleManual()">ההורדות חסומות במחשב הזה? לחצו כאן להעתקה ידנית</button>
+    <div id="manualCopy" style="display:none">
+      <textarea id="exportText" readonly onclick="this.select()"></textarea>
+      <button onclick="copyExport()">העתקת הטקסט</button>
+      <span class="hint">הדביקו את הטקסט בשיחה במקום קובץ.</span>
+    </div>
+  </div>
+  <div style="text-align:left; margin-top:8px"><button onclick="closeModal()">סגירה</button></div>
+</div></div>
+<script>
+const DATA = /*__DATA__*/null;
+
+/*__PURE_START__*/
+// DOM-free pure core. No free variables: everything arrives via (state, ctx, ...).
+// state = { assignment: {sid: classIndex}, locks: [sid], autoPinned: {sid: originClassIndex} }
+// ctx   = { byId, anchors, apartPairs, togetherPairs, restrict, classNames }
+//         restrict: sid -> array of allowed class indices (undefined = unrestricted)
+function cloneState(state) {
+  return JSON.parse(JSON.stringify({ assignment: state.assignment, locks: state.locks,
+                                     autoPinned: state.autoPinned || {} }));
+}
+function violationsForPure(state, ctx, sid) {
+  if (!ctx.byId[sid]) return [];
+  const out = [], me = state.assignment[sid], nm = ctx.byId[sid].name;
+  if (sid in ctx.anchors && me !== ctx.anchors[sid])
+    out.push(`${nm} נקבע/ה מראש לכיתת ${ctx.classNames[ctx.anchors[sid]]}`);
+  const allowed = ctx.restrict ? ctx.restrict[sid] : undefined;
+  if (allowed && !allowed.includes(me))
+    out.push(`${nm} (גן ${ctx.byId[sid].gan}) לא אמור/ה להיות בכיתת ${ctx.classNames[me]}`);
+  (ctx.apartPairs || []).forEach(([a, b]) => {
+    if (!ctx.byId[a] || !ctx.byId[b]) return;
+    if ((a === sid || b === sid) && state.assignment[a] === state.assignment[b])
+      out.push(`ההנחיה היא להפריד בין ${ctx.byId[a].name} ל־${ctx.byId[b].name}`);
+  });
+  (ctx.togetherPairs || []).forEach(([a, b]) => {
+    if (!ctx.byId[a] || !ctx.byId[b]) return;
+    if ((a === sid || b === sid) && state.assignment[a] !== state.assignment[b])
+      out.push(`ההנחיה היא לשבץ את ${ctx.byId[a].name} ו־${ctx.byId[b].name} יחד`);
+  });
+  return out;
+}
+function applyMove(state, ctx, sid, target) {
+  if (!ctx.byId[sid] || state.assignment[sid] === target) return { state, events: [] };
+  const s = cloneState(state), events = [], origin = state.assignment[sid];
+  s.assignment[sid] = target;
+  if (sid in s.autoPinned && target === s.autoPinned[sid]) {
+    // drag-back = true no-op: remove the pin this drag created
+    s.locks = s.locks.filter(x => x !== sid);
+    delete s.autoPinned[sid];
+    events.push({ type: "autounpin" });
+  } else if (!s.locks.includes(sid)) {
+    s.locks.push(sid);
+    s.autoPinned[sid] = (sid in s.autoPinned) ? s.autoPinned[sid] : origin;
+    events.push({ type: "autopin" });
+  } else {
+    events.push({ type: "movedLocked" });  // already locked (incl. anchors) — lock follows, no pin claim
+  }
+  if (sid in ctx.anchors && target !== ctx.anchors[sid])
+    events.push({ type: "anchorMoved", anchorClass: ctx.anchors[sid] });
+  const viol = violationsForPure(s, ctx, sid);
+  if (viol.length) events.push({ type: "violations", list: viol });
+  return { state: s, events };
+}
+function toggleLock(state, ctx, sid) {
+  if (!ctx.byId[sid]) return { state, events: [] };
+  const s = cloneState(state), events = [];
+  if (s.locks.includes(sid)) {
+    s.locks = s.locks.filter(x => x !== sid);
+    delete s.autoPinned[sid];  // manual unlock clears drag-tracking
+    events.push({ type: "unlocked", isAnchor: sid in ctx.anchors,
+                  anchorClass: ctx.anchors[sid] });
+  } else {
+    s.locks.push(sid);  // manual lock creates NO autoPinned entry
+    events.push({ type: "locked" });
+  }
+  return { state: s, events };
+}
+function pushHistory(hist, state, cap) {
+  const h = hist.slice(-((cap || 20) - 1));
+  h.push(cloneState(state));
+  return h;
+}
+function undoState(hist) {
+  if (!hist.length) return null;
+  return { hist: hist.slice(0, -1), state: cloneState(hist[hist.length - 1]) };
+}
+function buildExportPayload(state, meta) {
+  return { assignment: state.assignment, locks: state.locks,
+           autoPinned: state.autoPinned || {},
+           version: meta.version || 1, fingerprint: meta.fingerprint || null,
+           saved_at: meta.saved_at || null };
+}
+// One composed message per user action — a single toast slot must never get two calls.
+function composeToast(events, ctx, sid) {
+  const nm = ctx.byId[sid] ? ctx.byId[sid].name : "";
+  const parts = [];
+  events.forEach(e => {
+    if (e.type === "autopin") parts.push(`המהלך נשמר ו${nm} ננעל/ה 🔒 — החישוב הבא לא יזיז. לביטול: לחיצה על המנעול`);
+    if (e.type === "autounpin") parts.push(`${nm} חזר/ה למקום המקורי — הנעילה הוסרה`);
+    if (e.type === "anchorMoved") parts.push(`שימו לב: ${nm} נקבע/ה מראש לכיתת ${ctx.classNames[e.anchorClass]}`);
+    if (e.type === "violations") parts.push(`ההזזה סותרת כלל: ${e.list[0]}${e.list.length > 1 ? ` (+ עוד ${e.list.length - 1})` : ""}. הכרטיס סומן ב-⚠`);
+    if (e.type === "unlocked" && e.isAnchor) parts.push(`הנעילה של ${nm} בוטלה — שימו לב: שובץ/ה מראש לכיתת ${ctx.classNames[e.anchorClass]}. ↩ ביטול פעולה מחזיר`);
+  });
+  return parts.join(" · ");
+}
+/*__PURE_END__*/
+
+const students = DATA.students, classNames = DATA.classNames;
+const DRAFT = !!DATA.draft;
+const byId = Object.fromEntries(students.map(s => [s.id, s]));
+const gans = [...new Set(students.map(s => s.gan))];
+const PALETTE = ["#7bb662","#5b8dd6","#e0a458","#c46bb0","#5bc2c9","#d66b6b","#8a7fd6","#b0a24e"];
+const ganColor = Object.fromEntries(gans.map((g, i) => [g, PALETTE[i % PALETTE.length]]));
+const choosersOf = {};
+students.forEach(s => (s.choices || []).forEach(c => { (choosersOf[c.target] ||= []).push(s.id); }));
+const restrictBySid = {};
+students.forEach(s => { const r = (DATA.restrictions || {})[s.gan]; if (r) restrictBySid[s.id] = r; });
+const CTX = { byId, anchors: DATA.anchors || {}, apartPairs: DATA.apart || [],
+              togetherPairs: DATA.together || [], restrict: restrictBySid, classNames };
+
+const storeKey = "class-builder-" + (DATA.fingerprint || "legacy");
+const freshState = () => ({
+  assignment: { ...DATA.assignment },
+  locks: [...new Set([...Object.keys(CTX.anchors), ...(DATA.preLocked || [])])].filter(id => byId[id]),
+  autoPinned: {},
+});
+let state = freshState();
+let history = [];
+if (!DRAFT) {
+  try {
+    const saved = JSON.parse(localStorage.getItem(storeKey));
+    if (saved && saved.assignment && Object.keys(saved.assignment).length === students.length) {
+      saved.autoPinned = saved.autoPinned || {};
+      saved.locks = saved.locks || [];
+      const fresh = freshState();
+      if (JSON.stringify(saved.assignment) !== JSON.stringify(fresh.assignment) ||
+          JSON.stringify([...saved.locks].sort()) !== JSON.stringify([...fresh.locks].sort())) {
+        state = saved;
+        document.getElementById("restoreNote").style.display = "block";
+      } else { state = saved; }
+    }
+  } catch (e) {}
+}
+const chip = document.getElementById("verChip");
+if (DRAFT) { chip.textContent = "טיוטה — לפני אימות"; chip.classList.add("draft"); }
+else chip.textContent = "גרסה " + (DATA.version || 1) + " · נוצר " + (DATA.generated || "");
+if (DRAFT) {
+  document.getElementById("saveBtn").style.display = "none";
+  document.getElementById("resetBtn").style.display = "none";
+  document.getElementById("undoBtn").style.display = "none";
+  document.getElementById("restoreNote").style.display = "block";
+  document.getElementById("restoreNote").innerHTML = "טיוטה לצפייה בלבד — שינויים עוד לא נשמרים כאן. הלוח המלא יגיע אחרי אימות השמות וההערות.";
+  document.getElementById("hintLine").innerHTML = "לחיצה על כרטיס מדגישה את החברים שבחר (כחול) ואת מי שבחר בו (זהוב) · פס בצד = נקבע מראש · נקודה ירוקה = יש חבר איתו בכיתה, אדומה = אין, אפורה = לא נמצאו בחירות בטופס.";
+}
+
+let selected = null;
+let toastTimer = null;
+function showToast(msg) {
+  if (!msg) return;
+  const t = document.getElementById("toast");
+  t.textContent = msg; t.style.display = "block";
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => t.style.display = "none", 6000);
+}
+function commit(next, events, sid) {
+  history = pushHistory(history, state, 20);
+  state = next;
+  persist(); render(); highlight();
+  showToast(composeToast(events, CTX, sid));
+}
+function satisfied(sid) {
+  const s = byId[sid], mine = state.assignment[sid];
+  if (!s.choices || !s.choices.length) return null;
+  return s.choices.some(c => state.assignment[c.target] === mine);
+}
+
+function render() {
+  const board = document.getElementById("board");
+  board.innerHTML = "";
+  classNames.forEach((cn, ci) => {
+    const col = document.createElement("div");
+    col.className = "col"; col.dataset.cls = ci;
+    if (!DRAFT) {
+      col.addEventListener("dragover", e => { e.preventDefault(); col.classList.add("dragover"); });
+      col.addEventListener("dragleave", () => col.classList.remove("dragover"));
+      col.addEventListener("drop", e => {
+        e.preventDefault(); col.classList.remove("dragover");
+        const sid = e.dataTransfer.getData("text/plain");
+        if (sid && byId[sid]) {
+          const { state: next, events } = applyMove(state, CTX, sid, ci);
+          if (events.length || next !== state) commit(next, events, sid);
+        }
+      });
+    }
+    const members = students.filter(s => state.assignment[s.id] === ci);
+    const mish = members.filter(s => s.mishalevet).length;
+    const unsat = members.filter(s => satisfied(s.id) === false).length;
+    col.innerHTML = `<h2><span>${cn}</span><span>${members.length}</span></h2>
+      <div class="colstats">ילדי שילוב: ${mish}${unsat ? ` · <span style="color:var(--bad)">ללא חבר: ${unsat}</span>` : ""}</div>`;
+    const bar = document.createElement("div"); bar.className = "ganbar";
+    gans.forEach(g => {
+      const ct = members.filter(s => s.gan === g).length;
+      if (ct) { const seg = document.createElement("div"); seg.style.cssText = `flex:${ct};background:${ganColor[g]}`; seg.title = `${g}: ${ct}`; bar.appendChild(seg); }
+    });
+    col.appendChild(bar);
+    members.sort((a, b) => a.name.localeCompare(b.name, "he")).forEach(s => col.appendChild(card(s)));
+    board.appendChild(col);
+  });
+  const satOk = students.filter(s => satisfied(s.id) === true).length;
+  const satBad = students.filter(s => satisfied(s.id) === false).length;
+  document.getElementById("totalStat").textContent = `${students.length} תלמידים · ${classNames.length} כיתות`;
+  document.getElementById("satStat").innerHTML = `עם חבר: <b style="color:var(--ok)">${satOk}</b> · בלי חבר: <b style="color:${satBad ? "var(--bad)" : "inherit"}">${satBad}</b>`;
+  document.getElementById("legend").innerHTML =
+    gans.map(g => `<span><span class="swatch" style="background:${ganColor[g]}"></span>${g}</span>`).join(" ")
+    + ` <span><span class="swatch anchorline"></span>נקבע מראש</span>`
+    + ` <span>⚠ סותר כלל (לחצו לפרטים)</span>`;
+  const ub = document.getElementById("undoBtn");
+  if (ub) ub.disabled = history.length === 0;
+}
+
+function card(s) {
+  const el = document.createElement("div");
+  el.className = "card"; el.dataset.id = s.id;
+  el.style.borderRightColor = ganColor[s.gan];
+  if (!DRAFT) el.draggable = true; else el.style.cursor = "default";
+  if (state.locks.includes(s.id)) el.classList.add("locked");
+  if (s.id in CTX.anchors) el.classList.add("anchor");
+  const q = (document.getElementById("search").value || "").trim();
+  if (q && !s.name.includes(q)) el.classList.add("dim");
+  const viol = violationsForPure(state, CTX, s.id);
+  if (viol.length) el.classList.add("violation");
+  const sat = satisfied(s.id);
+  const dotColor = sat === null ? "var(--none)" : sat ? "var(--ok)" : "var(--bad)";
+  el.innerHTML = `<span class="dot" style="background:${dotColor}"></span>
+    <span class="nm">${s.name}${s.mishalevet ? " ⭐" : ""}${viol.length ? ' <span class="warn" title="' + viol.join("\n") + '">⚠</span>' : ""}</span>
+    ${DRAFT ? "" : `<button class="lock" title="${s.id in CTX.anchors ? "נקבע מראש בקובץ המקורי — אפשר לשחרר, בזהירות" : "נעילת הילד לכיתה הזו"}">🔒</button>`}`;
+  const warnEl = el.querySelector(".warn");
+  if (warnEl) warnEl.addEventListener("click", e => {
+    e.stopPropagation();
+    showToast("⚠ " + viol.join(" · "));
+  });
+  el.title = `גן ${s.gan}` + (s.id in CTX.anchors ? "\nנקבע מראש בקובץ המקורי" : "")
+    + (s.choices && s.choices.length ? "\nבחר: " + s.choices.map(c => byId[c.target] ? byId[c.target].name : "?").join(", ") : "\nלא נמצאו בחירות בטופס — לטיפול אישי")
+    + (choosersOf[s.id] ? "\nנבחר ע\"י: " + choosersOf[s.id].map(i => byId[i].name).join(", ") : "");
+  if (!DRAFT) {
+    el.addEventListener("dragstart", e => { e.dataTransfer.setData("text/plain", s.id); el.classList.add("dragging"); });
+    el.addEventListener("dragend", () => el.classList.remove("dragging"));
+    el.querySelector(".lock").addEventListener("click", e => {
+      e.stopPropagation();
+      const { state: next, events } = toggleLock(state, CTX, s.id);
+      commit(next, events, s.id);
+    });
+  }
+  el.addEventListener("click", () => { selected = selected === s.id ? null : s.id; highlight(); });
+  return el;
+}
+
+function highlight() {
+  document.querySelectorAll(".card").forEach(el => el.classList.remove("hl-friend", "hl-chooser", "selected"));
+  const info = document.getElementById("selInfo");
+  if (!selected) { info.style.display = "none"; return; }
+  const s = byId[selected];
+  document.querySelectorAll(`.card[data-id="${selected}"]`).forEach(el => el.classList.add("selected"));
+  (s.choices || []).forEach(c => document.querySelectorAll(`.card[data-id="${c.target}"]`).forEach(el => el.classList.add("hl-friend")));
+  (choosersOf[selected] || []).forEach(i => document.querySelectorAll(`.card[data-id="${i}"]`).forEach(el => el.classList.add("hl-chooser")));
+  // Plain-language explanation of the rings + any rule warnings — the tooltip's job,
+  // but visible, and it works on touch screens too.
+  const chose = (s.choices || []).map(c => byId[c.target] ? `<span class="ring">${byId[c.target].name}</span>` : "").join("");
+  const choseBy = (choosersOf[selected] || []).map(i => `<span class="ring gold">${byId[i].name}</span>`).join("");
+  const viol = violationsForPure(state, CTX, selected);
+  info.innerHTML = `<b>${s.name}</b>` +
+    (chose ? ` · בחר/ה להיות עם: ${chose}` : " · לא נמצאו בחירות בטופס — לטיפול אישי") +
+    (choseBy ? ` · בחרו להיות איתו/ה: ${choseBy}` : "") +
+    (viol.length ? `<br><span class="viol">⚠ ${viol.join(" · ")}</span>` : "");
+  info.style.display = "block";
+}
+
+function persist() { if (DRAFT) return; try { localStorage.setItem(storeKey, JSON.stringify(state)); } catch (e) {} }
+function doUndo() {
+  const r = undoState(history);
+  if (!r) return;
+  history = r.hist; state = r.state;
+  persist(); render(); highlight();
+}
+// In-page two-click confirmation: native browser dialogs are silently blocked in
+// sandboxed previews / locked-down browsers (and show English OK/Cancel) — never use them.
+let resetArm = null;
+function resetBoard(btn) {
+  if (!resetArm || resetArm.btn !== btn) {
+    if (resetArm) { clearTimeout(resetArm.t); resetArm.btn.textContent = "חזרה לפתרון המקורי"; }
+    const orig = btn.textContent;
+    btn.textContent = "בטוחות? לחיצה נוספת תמחק את השינויים";
+    resetArm = { btn, t: setTimeout(() => { btn.textContent = orig; resetArm = null; }, 5000) };
+    return;
+  }
+  clearTimeout(resetArm.t); resetArm.btn.textContent = "חזרה לפתרון המקורי"; resetArm = null;
+  history = pushHistory(history, state, 20);
+  state = freshState();
+  persist();
+  document.getElementById("restoreNote").style.display = "none";
+  render(); highlight();
+  showToast("חזרנו לפתרון המקורי שבקובץ. התחרטת? ↩ ביטול פעולה מחזיר את השינויים.");
+}
+
+function openExport() {
+  document.getElementById("dlOk").style.display = "none";
+  document.getElementById("manualCopy").style.display = "none";
+  document.getElementById("exportText").value = JSON.stringify(exportPayloadNow(), null, 1);
+  document.getElementById("modal").style.display = "flex";
+}
+function closeModal() { document.getElementById("modal").style.display = "none"; }
+document.getElementById("modal").addEventListener("click", e => { if (e.target.id === "modal") closeModal(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
+function toggleManual() {
+  const m = document.getElementById("manualCopy");
+  m.style.display = m.style.display === "none" ? "block" : "none";
+}
+function exportPayloadNow() {
+  return buildExportPayload(state, { version: DATA.version || 1, fingerprint: DATA.fingerprint || null,
+                                     saved_at: new Date().toISOString() });
+}
+function copyExport() {
+  const t = document.getElementById("exportText"); t.select();
+  try { navigator.clipboard.writeText(t.value); } catch (e) { document.execCommand("copy"); }
+}
+function downloadState() {
+  const fname = "שינויים בלוח - גרסה " + (DATA.version || 1) + ".json";
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([JSON.stringify(exportPayloadNow(), null, 1)], { type: "application/json" }));
+  a.download = fname; a.click();
+  const ok = document.getElementById("dlOk");
+  ok.textContent = "✓ ירד קובץ: " + fname + " — גררו אותו לשיחה עם Claude (או צרפו עם 📎).";
+  ok.style.display = "block";
+}
+function downloadCsv() {
+  let rows = [["שם", "גן", "כיתה", "שילוב", "נעול", "נקבע מראש"]];
+  students.forEach(s => rows.push([s.name, s.gan, classNames[state.assignment[s.id]],
+    s.mishalevet ? "כן" : "", state.locks.includes(s.id) ? "כן" : "",
+    s.id in CTX.anchors ? "כן" : ""]));
+  const csv = "﻿" + rows.map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(",")).join("\r\n");
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+  a.download = "רשימת שיבוץ - גרסה " + (DATA.version || 1) + ".csv"; a.click();
+}
+
+render();
+</script>
+</body>
+</html>

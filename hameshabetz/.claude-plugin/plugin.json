@@ -1,0 +1,22 @@
+{
+  "name": "hameshabetz",
+  "version": "1.2.0",
+  "description": "המשבץ — שיבוץ שכבה לכיתות מאוזנות מתוך טופס בחירת חברים: פיוס שמות בעברית, אילוצים (לא-עם, עוגנים, שילוב, איזון גנים ומגדר), אופטימיזציית CP-SAT, לוח גרירה בעברית ואקסל סופי.",
+  "author": {
+    "name": "Yaniv Golan",
+    "email": "yaniv@lool.vc"
+  },
+  "repository": "https://github.com/yaniv-golan/claude-lamora",
+  "license": "MIT",
+  "keywords": [
+    "שיבוץ-כיתות",
+    "education",
+    "hebrew",
+    "school",
+    "class-placement",
+    "sociometric",
+    "cp-sat",
+    "rtl"
+  ],
+  "skills": "./skills"
+}
