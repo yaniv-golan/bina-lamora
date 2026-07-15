@@ -1,0 +1,137 @@
+/* Clean reproduction of the claude.ai plugin-install UI for the install guide.
+   Neutral data only — no real account details. */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --ink: #211f1c;
+  --muted: #73716b;
+  --faint: #a3a09a;
+  --line: #e7e3dc;
+  --line-soft: #efece6;
+  --panel: #ffffff;
+  --page: #eae7e1;
+  --hover: #f0ede7;
+  --accent: #cc7a58;      /* Claude terracotta */
+  --btn-dark: #1c1a17;
+  --warn-bg: #fbeceb;
+  --warn-line: #f2d4cf;
+  --warn-ink: #9a3b31;
+}
+
+html, body {
+  width: 1120px; height: 720px;
+  background: var(--page);
+  font-family: ui-sans-serif, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+.stage { width: 1120px; height: 720px; display: flex; align-items: center; justify-content: center; }
+
+/* ---- Modal shell ---- */
+.modal {
+  width: 1000px; height: 620px;
+  background: var(--panel);
+  border-radius: 22px;
+  box-shadow: 0 30px 80px rgba(40,34,28,.20), 0 2px 8px rgba(40,34,28,.08);
+  display: flex; overflow: hidden;
+  position: relative;
+}
+.side {
+  width: 208px; flex: none;
+  border-right: 1px solid var(--line-soft);
+  padding: 22px 14px;
+}
+.side .grp { font-size: 12px; color: var(--faint); letter-spacing:.02em; margin: 18px 8px 8px; }
+.side .grp:first-child { margin-top: 4px; }
+.nav {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 10px; border-radius: 9px;
+  font-size: 14.5px; color: #45423d; cursor: default;
+}
+.nav .ic { width: 17px; height: 17px; opacity: .75; }
+.nav.on { background: var(--hover); color: var(--ink); font-weight: 600; }
+
+.main { flex: 1; padding: 24px 26px; position: relative; }
+.head { display: flex; align-items: center; justify-content: space-between; }
+.head h1 { font-family: ui-serif, "Iowan Old Style", Georgia, serif; font-size: 25px; font-weight: 600; letter-spacing:.01em; }
+.head .actions { display: flex; align-items: center; gap: 10px; }
+.iconbtn { width: 34px; height: 34px; display:grid; place-items:center; border-radius: 9px; color: var(--muted); }
+.btn {
+  height: 34px; padding: 0 14px; border-radius: 9px;
+  border: 1px solid var(--line); background: #fff; color: var(--ink);
+  font-size: 14px; font-weight: 500; display:inline-flex; align-items:center; gap:6px;
+}
+.btn.dark { background: var(--btn-dark); border-color: var(--btn-dark); color:#fff; }
+.btn.disabled { color: var(--faint); background:#f3f1ec; border-color: var(--line-soft); }
+
+.tabs { display: flex; gap: 6px; margin-top: 20px; }
+.tab { font-size: 14px; color: var(--muted); padding: 6px 12px; border-radius: 8px; }
+.tab.on { color: var(--ink); font-weight: 600; background: var(--hover); }
+
+.colhead { display:grid; grid-template-columns: 1fr 150px 90px 120px; gap: 12px;
+  font-size: 12.5px; color: var(--faint); padding: 18px 8px 10px; border-bottom: 1px solid var(--line-soft); }
+.row { display:grid; grid-template-columns: 1fr 150px 90px 120px; gap: 12px; align-items:center;
+  font-size: 14.5px; padding: 16px 8px; border-bottom: 1px solid var(--line-soft); }
+.row .name { display:flex; align-items:center; gap:10px; }
+.pill { font-size: 11.5px; color: var(--muted); background:#f1efe9; border-radius: 6px; padding: 2px 7px; }
+.muted { color: var(--muted); }
+
+/* ---- Dropdown menu ---- */
+.menu {
+  position: absolute; top: 62px; right: 26px; width: 210px;
+  background:#fff; border:1px solid var(--line); border-radius: 12px;
+  box-shadow: 0 16px 40px rgba(40,34,28,.16); padding: 6px; z-index: 5;
+}
+.menu .item { display:flex; align-items:center; gap:10px; padding: 9px 10px; border-radius: 8px; font-size: 14px; }
+.menu .item.hl { background: var(--hover); }
+.menu .item .ic { width:16px; height:16px; opacity:.7; }
+
+/* ---- Add-marketplace dialog ---- */
+.dialog {
+  width: 720px; background:#fff; border-radius: 18px;
+  box-shadow: 0 30px 80px rgba(40,34,28,.22); padding: 26px 28px 22px;
+}
+.dialog h2 { font-family: ui-serif, "Iowan Old Style", Georgia, serif; font-size: 23px; font-weight: 600; }
+.warn { display:flex; gap:10px; background: var(--warn-bg); border:1px solid var(--warn-line);
+  color: var(--warn-ink); border-radius: 12px; padding: 14px 16px; font-size: 13.5px; line-height: 1.5; margin: 18px 0; }
+.field label { font-size: 13px; color: var(--muted); }
+.input { margin-top: 7px; height: 46px; border:1px solid var(--line); border-radius: 11px;
+  display:flex; align-items:center; justify-content: space-between; padding: 0 14px; font-size: 15px; }
+.input .code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+.hint { font-size: 12.5px; color: var(--faint); margin-top: 8px; }
+.hint code { font-family: ui-monospace, Menlo, monospace; background:#f2f0ea; padding:1px 5px; border-radius:5px; }
+.dialog .foot { display:flex; justify-content:flex-end; gap: 10px; margin-top: 22px; }
+
+/* ---- Directory / plugin card ---- */
+.mkpills { display:flex; gap:10px; margin-top: 16px; }
+.mkpill { font-size: 14px; color: var(--muted); padding: 6px 12px; border-radius: 9px; }
+.mkpill.on { color: var(--ink); font-weight:600; background: var(--hover); }
+.card {
+  margin-top: 20px; width: 380px; border:1px solid var(--line); border-radius: 14px; padding: 18px 18px 16px;
+}
+.card .top { display:flex; align-items:flex-start; gap: 12px; }
+.card .logo { width: 46px; height: 46px; border-radius: 11px; background:#f1efe9; display:grid; place-items:center; flex:none; }
+.card .ttl { font-size: 17px; font-weight: 700; }
+.card .by { font-size: 14px; color: var(--muted); margin-top: 2px; }
+.card .plus { margin-inline-start:auto; width:34px;height:34px;border-radius:9px;border:1px solid var(--line);
+  display:grid;place-items:center; color:#3f3c37; }
+.card .plus.gear { background:#f3f1ec; }
+.card .desc { margin-top: 14px; font-size: 13.5px; line-height: 1.6; color: #56534e; }
+
+/* RTL card text */
+[dir="rtl"] { text-align: right; }
+
+/* ---- Toast ---- */
+.toast {
+  position: absolute; top: 18px; right: 20px;
+  background:#fff; border:1px solid var(--line); border-radius: 12px;
+  box-shadow: 0 14px 34px rgba(40,34,28,.16);
+  display:flex; align-items:center; gap:10px; padding: 12px 15px; font-size: 14px; z-index: 8;
+}
+.toast .dot { width: 18px; height:18px; border-radius:50%; background:#e8f0ea; color:#3f7a52; display:grid; place-items:center; font-size:12px; flex:none;}
+
+/* callout number badges for the guide */
+.badge { position:absolute; width:30px;height:30px;border-radius:50%; background: var(--accent); color:#fff;
+  font-weight:700; font-size:15px; display:grid; place-items:center; box-shadow:0 3px 8px rgba(0,0,0,.18); z-index: 20; }
+.ring { position:absolute; border:2.5px solid var(--accent); border-radius:12px; z-index: 19; box-shadow:0 0 0 4px rgba(204,122,88,.15); }

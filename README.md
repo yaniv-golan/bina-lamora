@@ -65,6 +65,28 @@
 
 אפשר לסגור את החלון. לא צריך לחזור על השלב הזה שוב.
 
+**ככה זה נראה, צעד-אחר-צעד** (עקבו אחרי המספרים בעיגולים הכתומים):
+
+<div align="center">
+
+<img src="docs/images/frame1-add-marketplace.png" width="760" alt="לשונית Plugins — פתיחת התפריט Add ובחירת Add marketplace">
+
+<sub>① לוחצים **Add**, ② בוחרים **Add marketplace**.</sub>
+
+<img src="docs/images/frame2-sync.png" width="760" alt="חלון Add marketplace — הקלדת yaniv-golan/claude-lamora ולחיצה על Sync">
+
+<sub>③ מקלידים <code>yaniv-golan/claude-lamora</code>, ④ לוחצים **Sync**.</sub>
+
+<img src="docs/images/frame3-install.png" width="760" alt="חלון Directory — כרטיס המשבץ עם כפתור הפלוס להתקנה">
+
+<sub>⑤ לוחצים על **+** בכרטיס **המשבץ**.</sub>
+
+<img src="docs/images/frame4-installed.png" width="760" alt="הודעת אישור: המשבץ הותקן ומוכן לשימוש">
+
+<sub>✓ מופיעה הודעת האישור — המשבץ מותקן ומוכן.</sub>
+
+</div>
+
 ---
 
 ## שלב 2 — שיבוץ כיתות (בכל פעם מחדש)
