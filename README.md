@@ -7,8 +7,8 @@
 
 הכלי הראשון כאן: **המשבץ** — שיבוץ שכבה לכיתות מאוזנות.
 
-> אין צורך לדעת לתכנת. אם את/ה יודע/ת לפתוח קובץ אקסל ולשלוח הודעה — זה מספיק.
-> המדריך הזה מלווה אותך צעד-אחר-צעד.
+> אין צורך לדעת לתכנת, ואין מה להתקין במחשב. הכל קורה בתוך Claude שבדפדפן.
+> אם את/ה יודע/ת לפתוח קובץ אקסל ולשלוח הודעה — זה מספיק. המדריך מלווה צעד-אחר-צעד.
 
 ---
 
@@ -27,52 +27,56 @@
 
 ---
 
-## מה צריך כדי להתחיל (פעם אחת)
+## מה צריך כדי להתחיל
 
-1. **מנוי ל-Claude** — כל מנוי בתשלום (Pro / Max / Team) מתאים.
-2. **אפליקציית Claude Code** — זו הסביבה שבה הכלי רץ. יש שלוש דרכים, בחר/י את הנוחה לך:
-   - 🖥️ **אפליקציה למחשב** (מומלץ למי שלא טכני) — הורדה מתוך אתר Claude, למק ולווינדוס.
-   - 🌐 **בדפדפן** — נכנסים לכתובת **claude.ai/code** ומתחברים עם אותו חשבון.
-   - ⌨️ דרך הטרמינל / תוסף ל-VS Code (למי שכבר מכיר).
+- **מנוי Claude בתשלום** — כל מנוי מתאים (Pro, Max, Team או Enterprise).
+- **דפדפן** — נכנסים ל-**claude.ai** ומתחברים. אפשר גם באפליקציית Claude למחשב או בנייד;
+  זה אותו חשבון, ואותם צעדים בדיוק.
 
-> אם יש לך רק את אפליקציית Claude הרגילה (הצ'אט) — צריך להוסיף גם את **Claude Code**.
-> זו אותה התחברות, אותו חשבון, רק סביבה שיודעת להריץ כלים כמו המשבץ.
+> אין צורך להוריד או להתקין תוכנה. "המשבץ" מותקן בתוך Claude עצמו (בבחירת "Plugins"),
+> ורץ שם.
 
 ---
 
-## שלב 1 — התקנת המשבץ (פעם אחת, לוקח דקה)
+## שלב 1 — הוספת "המשבץ" ל-Claude (פעם אחת, דקה)
 
-בתוך **Claude Code**, בשורת ההקלדה למטה (שם כותבים הודעות), מדביקים את הפקודה הראשונה
-ומקישים **Enter**. אחר כך מדביקים את השנייה ומקישים **Enter** שוב:
+עושים את זה **פעם אחת בלבד**. אחרי זה המשבץ תמיד שם.
 
-<div dir="ltr">
+1. נכנסים ל-**claude.ai** ומתחברים.
+2. בתפריט הצד לוחצים על **Customize** (התאמה אישית).
+   > עובד/ת דרך **Cowork**? פותחים קודם את לשונית **Cowork**, ואז **Customize** — משם
+   > הצעדים זהים.
+3. במסך שנפתח, לוחצים בצד על **Plugins** (פלאגינים).
+4. למעלה מימין לוחצים על **Add ▾** ובוחרים **Add marketplace** (הוספת מרקטפלייס).
+5. בשדה הכתובת מקלידים:
 
-```
-/plugin marketplace add yaniv-golan/claude-lamora
-```
-```
-/plugin install hameshabetz@claude-lamora
-```
+   <div dir="ltr">
 
-</div>
+   ```
+   yaniv-golan/claude-lamora
+   ```
 
-💡 **טיפ:** ברגע שמקלידים `/` נפתחת רשימה של פקודות. אפשר פשוט להדביק את השורה כמו
-שהיא. הפקודה הראשונה מוסיפה את החנות "קלוד-למורה", והשנייה מתקינה מתוכה את המשבץ.
+   </div>
 
-אחרי ההתקנה כדאי **לפתוח שיחה חדשה** (כפתור "New / שיחה חדשה"). זהו — המשבץ מותקן
-לתמיד, לא צריך לחזור על השלב הזה.
+   ובוחרים את **claude-lamora / yaniv-golan** שקופץ ברשימה.
+6. לוחצים על **Sync** (סנכרון). נפתח חלון שבו מופיע הכרטיס **המשבץ**.
+7. לוחצים על כפתור ה־**+** שעל כרטיס המשבץ. תופיע הודעה קטנה למעלה:
+   *"המשבץ is installed and ready to use"* — זהו, מותקן. 🎉
+
+אפשר לסגור את החלון. לא צריך לחזור על השלב הזה שוב.
 
 ---
 
 ## שלב 2 — שיבוץ כיתות (בכל פעם מחדש)
 
-1. **פותחים שיחה חדשה** ב-Claude Code.
+1. **פותחים שיחה חדשה** ב-Claude.
 2. **מצרפים את קובץ האקסל** של בחירות החברים (גוררים אותו לתוך השיחה, או בכפתור
-   המהדק 📎).
+   ה-**+** / המהדק 📎).
 3. **כותבים בעברית**, למשל:
 
    > *"יש לי קובץ בחירות חברים של כיתות א', תעזור לי לשבץ אותם לכיתות."*
 
+   Claude יזהה לבד שצריך להפעיל את המשבץ — לא צריך פקודות מיוחדות.
 4. **עונים על השאלות.** המשבץ ישאל אותך דברים פשוטים, אחד-אחד, בעברית:
    - כמה כיתות? ואיך קוראים להן (למשל א1, א2, א3)?
    - יש ילדי שילוב? מי הם? (אפשר פשוט להקליד רשימת שמות.)
@@ -93,7 +97,7 @@
 
 ## פרטיות — חשוב 🔒
 
-הכלי בנוי סביב עיקרון אחד: **מידע על קטינים לא עוזב את המחשב שלך.**
+הכלי בנוי סביב עיקרון אחד: **מידע על קטינים לא עוזב את הסביבה שלך.**
 
 - אין חיפוש שמות באינטרנט.
 - אין שליחת רשימת הילדים לשום שירות חיצוני.
@@ -105,9 +109,9 @@
 
 ## אם משהו לא עובד 🛠️
 
-- **הפקודה `/plugin` לא מזוהה** — ודא/י שאת/ה כותב/ת אותה בתוך **Claude Code** (לא
-  בצ'אט הרגיל של Claude), ושהיא מתחילה בלוכסן `/`.
-- **המשבץ לא "תופס" אחרי ההתקנה** — פתח/י שיחה חדשה ונסה/י שוב.
+- **לא מוצא/ת את Customize או את Plugins** — ודא/י שאת/ה מחובר/ת לחשבון Claude בתשלום.
+  הפלאגינים זמינים במנויי Pro / Max / Team / Enterprise.
+- **המשבץ לא "תופס" בשיחה** — פתח/י שיחה חדשה אחרי ההתקנה ונסה/י שוב.
 - **הקובץ לא נקרא כמו שצריך** — פשוט ספר/י למשבץ בשיחה מה יש בקובץ ("יש כמה גיליונות",
   "שמות הגנים לא אחידים") — הוא בנוי להתמודד עם זה ולשאול אותך מה שחסר.
 - נתקעת? פשוט כתוב/י בשיחה מה קרה — Claude יסביר וימשיך משם.
@@ -116,7 +120,7 @@
 
 ## דרישות טכניות (למי שסקרן/ית)
 
-- Python 3 — מגיע מובנה עם Claude Code, לא צריך להתקין כלום.
+- הכל רץ בתוך Claude — Python מגיע מובנה, לא צריך להתקין כלום במחשב שלך.
 - לאופטימיזציה המתמטית המלאה מומלצת ספריית `ortools` — המשבץ מתקין אותה לבד כשיש רשת,
   ועובד מצוין גם בלעדיה (יש לו מנוע גיבוי מובנה שרץ בלי אינטרנט).
 
@@ -129,26 +133,32 @@
 ## English
 
 **claude-lamora** ("Claude for the Teacher", קלוד-למורה) is a Claude plugin marketplace
-for Israeli educators. Its first skill, **hameshabetz** (המשבץ, "The Placer"), turns a
-Google Forms friend-choice export into a balanced class assignment: Hebrew-aware name
-reconciliation, hard/soft constraints (apart/together pairs, anchors, special-ed
-spread, kindergarten and gender balance, per-gan class restrictions), CP-SAT
-optimization with an offline fallback engine, a self-contained RTL drag-and-drop
-review board, and final Excel rosters. Built for **non-technical school counselors** —
-all children's data is processed locally and never sent to external services.
+for Israeli educators, built for **Claude Cowork**. Its first skill, **hameshabetz**
+(המשבץ, "The Placer"), turns a Google Forms friend-choice export into a balanced class
+assignment: Hebrew-aware name reconciliation, hard/soft constraints (apart/together
+pairs, anchors, special-ed spread, kindergarten and gender balance, per-gan class
+restrictions), CP-SAT optimization with an offline fallback engine, a self-contained
+RTL drag-and-drop review board, and final Excel rosters. Built for **non-technical
+school counselors** — all children's data is processed locally and never sent to
+external services.
 
-### Install
+### Install (one time)
 
-Inside **Claude Code** (desktop app, `claude.ai/code`, or the CLI), type these two
-commands and press Enter after each:
+No downloads. Everything runs inside Claude, on any paid plan (Pro / Max / Team /
+Enterprise), from the browser at **claude.ai**, the desktop app, or mobile.
 
-```
-/plugin marketplace add yaniv-golan/claude-lamora
-/plugin install hameshabetz@claude-lamora
-```
+1. Go to **claude.ai** and sign in.
+2. In the sidebar, open **Customize**. *(Using **Cowork**? Open the **Cowork** tab
+   first, then **Customize** — the steps are the same.)*
+3. Select the **Plugins** tab.
+4. Click **Add ▾** → **Add marketplace**.
+5. Enter `yaniv-golan/claude-lamora` and pick it from the list.
+6. Click **Sync**, then click **+** on the **המשבץ** card. You'll see
+   *"המשבץ is installed and ready to use."*
 
 Then start a new conversation, attach your friend-choice spreadsheet, and write
-(in Hebrew or English): *"help me split this grade into balanced classes."*
+(in Hebrew or English): *"help me split this grade into balanced classes."* Claude
+invokes the skill automatically.
 
 ### For maintainers
 
