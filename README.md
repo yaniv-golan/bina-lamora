@@ -129,11 +129,13 @@
 
 ## פרטיות — חשוב 🔒
 
-הכלי בנוי סביב עיקרון אחד: **מידע על קטינים לא עוזב את הסביבה שלך.**
+**המידע על הילדים נמצא רק בשני מקומות: אצלך במחשב, או בשיחה ב-Claude (השרתים של
+Anthropic) — בדיוק כמו כל קובץ שמצרפים לצ'אט.** למשבץ עצמו אין שרת משלו, והוא לא
+שומר שמות או פרטים של ילדים בשום מקום.
 
-- אין חיפוש שמות באינטרנט.
-- אין שליחת רשימת הילדים לשום שירות חיצוני.
-- לוח הסקירה הוא קובץ עצמאי — נפתח גם במחשב בית-ספרי בלי חיבור לאינטרנט.
+- אין חיפוש שמות באינטרנט ואין העברה לשום שירות חיצוני אחר.
+- לוח הסקירה וקובצי האקסל נשמרים אצלך במחשב. לוח הסקירה הוא קובץ עצמאי — נפתח גם
+  במחשב בית-ספרי בלי חיבור לאינטרנט.
 
 הקבצים הסופיים מכילים שמות של ילדים — לשמור עליהם כמו על כל מסמך רגיש בבית הספר.
 
@@ -171,8 +173,9 @@ assignment: Hebrew-aware name reconciliation, hard/soft constraints (apart/toget
 pairs, anchors, special-ed spread, kindergarten and gender balance, per-gan class
 restrictions), CP-SAT optimization with an offline fallback engine, a self-contained
 RTL drag-and-drop review board, and final Excel rosters. Built for **non-technical
-school counselors** — all children's data is processed locally and never sent to
-external services.
+school counselors**. Children's data only ever lives on your computer or inside the
+Claude conversation (Anthropic's servers) — like any attachment; the skill has no
+server of its own, stores nothing, and makes no other external calls.
 
 ### Install (one time)
 
