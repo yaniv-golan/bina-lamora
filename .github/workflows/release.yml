@@ -38,6 +38,10 @@ jobs:
           version="$(cat VERSION)"
           # Plugin-only archive (what users install from the marketplace).
           zip -r "hameshabetz-${version}.zip" hameshabetz -x '*/__pycache__/*'
+          # Bare-skill archive (SKILL.md at the archive root) for ChatGPT /
+          # Manus / Agent-Skills uploads, which expect the skill folder itself.
+          ( cd hameshabetz/skills && \
+            zip -r "${GITHUB_WORKSPACE}/hameshabetz-skill-${version}.zip" hameshabetz -x '*/__pycache__/*' )
           # Full marketplace archive (all universal-repo formats).
           zip -r "claude-lamora-${version}.zip" \
             .claude-plugin .cursor-plugin .agents hameshabetz \
@@ -52,4 +56,5 @@ jobs:
           generate_release_notes: true
           files: |
             hameshabetz-*.zip
+            hameshabetz-skill-*.zip
             claude-lamora-*.zip

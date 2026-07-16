@@ -14,6 +14,11 @@
 - **One-click install**: added a hosted "Install in Claude Desktop" page
   (`static/install-claude-desktop.html`) deployed via GitHub Pages
   (`.github/workflows/deploy-pages.yml`), linked from the README with a button.
+- **ChatGPT support**: releases now attach a bare-skill archive
+  (`hameshabetz-skill-<version>.zip`, `SKILL.md` at the root) for ChatGPT Skills
+  (Business/Enterprise/Edu/Healthcare) and other Agent-Skills uploads. README
+  documents the ChatGPT path in both the Hebrew and English sections; Codex/manual
+  install now point at the same bare-skill archive.
 
 ## 1.2.0 — 2026-07-15
 

@@ -97,6 +97,18 @@
 
 </div>
 
+### משתמשים ב-ChatGPT? (אפשרות נוספת, לא חובה)
+
+גם ChatGPT תומך בכלים כאלה, אז אפשר להריץ את המשבץ גם שם — **אבל רק אם לבית הספר
+או לארגון יש מנוי ChatGPT עסקי (Business / Enterprise / Edu).** בחשבון ChatGPT אישי
+(החינמי או Plus) האפשרות הזאת עדיין לא קיימת — ואז הדרך הפשוטה לכולם היא פשוט לעבוד
+עם Claude, כמו למעלה.
+
+יש חשבון מתאים? מורידים את הקובץ **hameshabetz-skill.zip** מ[עמוד
+ההורדות](https://github.com/yaniv-golan/claude-lamora/releases/latest), ואז בתוך
+ChatGPT נכנסים ל-**Skills**, בוחרים **Create ▸ Upload** ומעלים אותו. מכאן העבודה
+זהה לגמרי — מצרפים את קובץ האקסל, עונים על השאלות, ומקבלים לוח ואקסל.
+
 ---
 
 ## שלב 2 — שיבוץ כיתות (בכל פעם מחדש)
@@ -202,7 +214,7 @@ invokes the skill automatically.
 ### Install on other platforms (developers)
 
 `hameshabetz` is packaged to the open [Agent Skills](https://agentskills.io) standard, so
-it also installs on Claude Code, Cursor, Codex CLI, Windsurf, and any compatible agent.
+it also installs on Claude Code, Cursor, Codex CLI, Windsurf, ChatGPT, and any compatible agent.
 
 **Claude Code (CLI)** — from a session:
 
@@ -221,15 +233,22 @@ npx skills add yaniv-golan/claude-lamora
 into the **Search or Paste Link** box.
 
 **Codex CLI** — `$skill-installer https://github.com/yaniv-golan/claude-lamora`, or download the
-`hameshabetz-*.zip` asset from the [latest release](https://github.com/yaniv-golan/claude-lamora/releases/latest)
+`hameshabetz-skill-*.zip` asset from the [latest release](https://github.com/yaniv-golan/claude-lamora/releases/latest)
 and extract the `hameshabetz/` folder into `~/.codex/skills/`.
+
+**ChatGPT (Business / Enterprise / Edu / Healthcare)** — ChatGPT Skills use the same Agent
+Skills standard. Download the `hameshabetz-skill-*.zip` asset from the [latest release](https://github.com/yaniv-golan/claude-lamora/releases/latest)
+and upload it via **Skills → Create → Upload**. The code-interpreter sandbox runs the Python
+pipeline and produces the board and Excel files. *Not available on Free / Plus / Go plans, and
+Skills don't sync between the desktop and web apps — add it on each separately.*
 
 **Manual (Windsurf, OpenClaw, etc.)** — extract the same `hameshabetz/` folder into your
 project's `.agents/skills/` or your user-level `~/.agents/skills/`.
 
-> The skill runs Python locally and uses Google OR-Tools (`ortools`) for the full CP-SAT solve.
-> Where `ortools` can't be installed (e.g. ChatGPT's sandbox), it falls back to a built-in
-> offline engine, so it still works — just with a simpler optimizer.
+> The skill uses Google OR-Tools (`ortools`) for the full CP-SAT solve. Hosts that can install
+> it (Claude, Cursor, Codex, and ChatGPT's sandbox — whose package proxy now serves PyPI) get
+> the full optimizer; anywhere `ortools` is unavailable, a built-in offline engine takes over,
+> so the skill still works, just with a simpler solver.
 
 ### For maintainers
 
