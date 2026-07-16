@@ -1,0 +1,114 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<style>
+/* Clean reproduction of the ChatGPT Skills UI for the install guide.
+   Neutral data only — no real account details or conversations. */
+* { margin:0; padding:0; box-sizing:border-box; }
+:root{
+  --ink:#0d0d0d; --muted:#8f8f8f; --faint:#b4b4b4; --line:#ececec;
+  --sb:#f9f9f9; --hover:# efefef; --hover:#efefef; --accent:#cc7a58;
+}
+html,body{ width:1120px; height:720px; background:#fff;
+  font-family:ui-sans-serif,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+  color:var(--ink); -webkit-font-smoothing:antialiased; }
+.app{ display:flex; width:1120px; height:720px; position:relative; overflow:hidden; }
+
+/* sidebar */
+.sb{ width:246px; flex:none; background:var(--sb); border-right:1px solid var(--line);
+  padding:14px 12px; display:flex; flex-direction:column; }
+.brand{ font-weight:600; font-size:15px; padding:6px 8px 14px; }
+.nav{ display:flex; align-items:center; gap:11px; padding:8px 10px; border-radius:8px;
+  font-size:14px; color:#2d2d2d; }
+.nav.on{ background:#ececec; font-weight:600; }
+.nav .ic{ width:17px; height:17px; opacity:.7; }
+.spacer{ flex:1; }
+.acct{ display:flex; align-items:center; gap:10px; padding:9px 8px; border-top:1px solid var(--line); }
+.acct .av{ width:26px; height:26px; border-radius:7px; background:#e6e6e6; display:grid; place-items:center;
+  font-size:11px; color:#6b6b6b; font-weight:700; }
+.acct .who b{ font-size:13.5px; } .acct .who span{ display:block; font-size:11.5px; color:var(--muted); }
+
+/* main */
+.main{ flex:1; position:relative; padding:22px 34px; }
+.toggle{ position:absolute; top:18px; left:50%; transform:translateX(-50%);
+  background:#f2f2f2; border-radius:999px; padding:4px; display:flex; gap:2px; }
+.toggle span{ font-size:14px; padding:6px 18px; border-radius:999px; color:#5c5c5c; }
+.toggle span.on{ background:#fff; color:var(--ink); font-weight:600; box-shadow:0 1px 3px rgba(0,0,0,.08); }
+
+.h1{ font-size:30px; font-weight:600; margin-top:52px; }
+.sub{ font-size:14.5px; color:var(--muted); margin-top:6px; }
+.tools{ position:absolute; top:96px; right:34px; display:flex; gap:10px; align-items:center; }
+.search{ width:250px; height:42px; border:1px solid var(--line); border-radius:999px;
+  display:flex; align-items:center; gap:9px; padding:0 16px; color:var(--faint); font-size:14px; }
+.plus{ width:42px; height:42px; border:1px solid var(--line); border-radius:999px;
+  display:grid; place-items:center; color:#3d3d3d; position:relative; }
+
+.sec{ font-size:13.5px; color:#404040; font-weight:600; margin:70px 0 4px; }
+.row{ display:flex; align-items:center; gap:13px; padding:15px 6px; border-bottom:1px solid #f4f4f4; }
+.row .logo{ width:38px; height:38px; border-radius:10px;
+  background:linear-gradient(135deg,#f3d9c9,#e9b7d4); flex:none; }
+.row .bars{ flex:1; }
+.row .bars .a{ height:11px; width:150px; background:#e9e9e9; border-radius:5px; }
+.row .bars .b{ height:9px; width:300px; background:#f1f1f1; border-radius:5px; margin-top:8px; }
+.row .dots{ color:var(--faint); font-size:20px; letter-spacing:2px; }
+
+/* dropdown menu */
+.menu{ position:absolute; top:150px; right:34px; width:236px; background:#fff;
+  border:1px solid var(--line); border-radius:14px; box-shadow:0 18px 44px rgba(0,0,0,.16);
+  padding:7px; z-index:5; }
+.item{ display:flex; align-items:center; gap:11px; padding:10px 11px; border-radius:9px;
+  font-size:14px; position:relative; }
+.item.hl{ background:#f3f3f3; }
+.item .ic{ width:16px; height:16px; opacity:.7; }
+
+/* callouts */
+.badge{ position:absolute; width:30px; height:30px; border-radius:50%; background:var(--accent);
+  color:#fff; font-weight:700; font-size:15px; display:grid; place-items:center;
+  box-shadow:0 3px 8px rgba(0,0,0,.18); z-index:20; }
+.ring{ position:absolute; border:2.5px solid var(--accent); border-radius:12px; z-index:19;
+  box-shadow:0 0 0 4px rgba(204,122,88,.15); }
+</style></head>
+<body><div class="app">
+
+  <aside class="sb">
+    <div class="brand">ChatGPT</div>
+    <div class="nav"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 20h9M4 20l1-4L16 5a2 2 0 0 1 3 3L8 19l-4 1z"/></svg>New chat</div>
+    <div class="nav"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.2-3.2"/></svg>Search</div>
+    <div class="nav"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 7h6l2 2h10v9a2 2 0 0 1-2 2H3z"/></svg>Projects</div>
+    <div class="nav"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 10h16"/></svg>Scheduled</div>
+    <div class="nav"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 5h11v15H4zM15 5h5v15h-5"/></svg>Library</div>
+    <div class="nav"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5c3 3 3 14 0 17M12 3.5c-3 3-3 14 0 17M3.6 12h16.8"/></svg>Plugins</div>
+    <div class="nav on"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3.5" y="4.5" width="17" height="15" rx="2.5"/><path d="M8 9h8M8 13h5"/></svg>Skills</div>
+    <div class="nav"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="5" y="7" width="14" height="12" rx="2"/><path d="M9 7V5a3 3 0 0 1 6 0v2M9 13h.01M15 13h.01"/></svg>Agents</div>
+    <div class="spacer"></div>
+    <div class="acct"><div class="av">✦</div><div class="who"><b>החשבון שלך</b><span>Business</span></div></div>
+  </aside>
+
+  <section class="main">
+    <div class="toggle"><span>Plugins</span><span class="on">Skills</span></div>
+
+    <div class="h1">Skills</div>
+    <div class="sub">Instructions that extend ChatGPT's capabilities.</div>
+
+    <div class="tools">
+      <div class="search"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.2-3.2"/></svg>Search Skills</div>
+      <div class="plus">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+        <span class="ring" style="inset:-5px; border-radius:999px"></span>
+        <span class="badge" style="top:-15px; right:-13px">1</span>
+      </div>
+    </div>
+
+    <div class="sec">Installed</div>
+    <div class="row"><div class="logo"></div><div class="bars"><div class="a"></div><div class="b"></div></div><div class="dots">···</div></div>
+    <div class="row"><div class="logo"></div><div class="bars"><div class="a"></div><div class="b"></div></div><div class="dots">···</div></div>
+
+    <!-- open dropdown -->
+    <div class="menu">
+      <div class="item"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 4h16v12H7l-3 3z"/></svg>Create with chat</div>
+      <div class="item"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 20l1-4L16 5a2 2 0 0 1 3 3L8 19z"/></svg>Create with editor</div>
+      <div class="item hl"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 16V5M8 9l4-4 4 4M5 19h14"/></svg>Upload from your computer
+        <span class="ring" style="inset:-3px"></span><span class="badge" style="top:-13px; right:-9px">2</span>
+      </div>
+    </div>
+  </section>
+
+</div></body></html>

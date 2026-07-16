@@ -110,6 +110,18 @@ ChatGPT נכנסים ללשונית **Skills**, לוחצים על כפתור ה-
 your computer** וגוררים לשם את הקובץ. מכאן העבודה זהה לגמרי — מצרפים את קובץ האקסל,
 עונים על השאלות, ומקבלים לוח ואקסל.
 
+<div align="center">
+
+<img src="docs/images/chatgpt1-upload.png" width="760" alt="עמוד Skills ב-ChatGPT — פתיחת תפריט ה-＋ ובחירת Upload from your computer">
+
+<sub>① לוחצים על **+**, ② בוחרים **Upload from your computer**.</sub>
+
+<img src="docs/images/chatgpt2-uploaded.png" width="760" alt="חלון Upload a skill — הקובץ hameshabetz-skill.zip נקלט עם סימן וי ירוק">
+
+<sub>✓ גוררים את קובץ ה-zip — סימן ✓ ירוק מאשר שהמשבץ נקלט.</sub>
+
+</div>
+
 ---
 
 ## שלב 2 — שיבוץ כיתות (בכל פעם מחדש)
