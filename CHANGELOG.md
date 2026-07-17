@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+### Landing page
+- Reworked `site/index.html` after an adversarial audience review: added an assistant
+  **chooser** and a full, equally-detailed **ChatGPT install section** (plan-gate callout +
+  desktop "Add marketplace" route with a copy chip + browser upload route with screenshots),
+  so Claude and ChatGPT get equal, usable directions instead of ChatGPT being a FAQ footnote.
+- Audience-fit fixes: resolved the "free tool" vs. paid-subscription contradiction (states the
+  ~\$20/mo Pro price and that the free plan lacks plugins), a free-plan failure note on step 1,
+  a Claude intro + privacy teaser in the hero, glossed English UI terms (Customize/Plugins/Sync),
+  clearer marketplace-string wording, and Hebrew register cleanups (consistent plural address).
+
 ### ChatGPT parity
 - Documented that ChatGPT (desktop app, Business/Enterprise/Edu/Healthcare) consumes this
   Claude marketplace repo **directly** — **Plugins → Add marketplace → `yaniv-golan/claude-lamora`**

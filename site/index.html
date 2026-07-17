@@ -113,8 +113,26 @@
   .secondary-cta{text-align:center; margin-top:20px}
   .secondary-cta .btn{font-size:15px; padding:12px 20px}
 
+  /* which-assistant chooser */
+  .choose{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:26px}
+  .choose a{display:block; background:var(--card); border:1px solid var(--line); border-radius:16px; padding:22px; color:inherit}
+  .choose a:hover{border-color:var(--accent); text-decoration:none}
+  .choose .tag{font-size:12.5px; font-weight:800; color:var(--accent-deep); letter-spacing:.02em}
+  .choose h3{font-size:19px; margin:6px 0 4px}
+  .choose p{color:var(--body); font-size:14.5px}
+  .choose .go{color:var(--accent-deep); font-weight:700; font-size:14px; margin-top:10px; display:inline-block}
+
+  /* plan-gate callout + route sub-heads (used in the ChatGPT section) */
+  .gate{background:#fff7ed; border:1px solid #f3d9bf; border-radius:14px; padding:16px 18px;
+    color:#8a5a2b; font-size:15px; line-height:1.6; margin:2px 0 22px}
+  .route{font-weight:800; font-size:18px; margin:30px 0 2px; color:var(--ink)}
+  .route .lbl{font-size:12.5px; font-weight:800; color:var(--accent-deep); display:block}
+  .miss{color:var(--muted); font-size:14px; margin-top:12px; padding:12px 14px; background:#faf6f0;
+    border-radius:10px; border:1px solid var(--line)}
+
   @media(max-width:720px){
     .cards{grid-template-columns:1fr}
+    .choose{grid-template-columns:1fr}
     .step{grid-template-columns:1fr; gap:10px}
   }
 </style>
@@ -124,7 +142,7 @@
 <div class="wrap">
   <div class="top">
     <div class="brand"><span class="em">👩‍🏫</span> קלוד־למורה</div>
-    <div class="ghost">כלי חינם למורות ולצוותי חינוך</div>
+    <div class="ghost">כלי קוד־פתוח למורות ולצוותי חינוך</div>
   </div>
 </div>
 
@@ -132,9 +150,11 @@
   <h1>שיבוץ שכבה לכיתות — <span class="accent">בשעה, לא ביומיים</span></h1>
   <p class="lead">
     <b>המשבץ</b> הופך את טופס בחירת החברים לחלוקה מאוזנת לכיתות: לכל ילד חבר אחד לפחות שבחר,
-    כיתות מאוזנות בגודל, בבנים־בנות ובגני המוצא — והכול בעברית, בתוך שיחה אחת.
+    כיתות מאוזנות בגודל, ביחס בנים–בנות ובפיזור גני המוצא — והכול בעברית, בתוך שיחה אחת.
   </p>
-  <p class="note">אין מה להתקין במחשב. אם את/ה יודע/ת לפתוח אקסל ולשלוח הודעה — זה מספיק.</p>
+  <p class="note">עובד בתוך Claude — עוזר בינה מלאכותית כמו ChatGPT — בלי להתקין כלום במחשב.
+    אם אתם יודעים לפתוח אקסל ולשלוח הודעה, זה מספיק.</p>
+  <p class="note" style="margin-top:8px">🔒 המידע על הילדים לא עוזב את השיחה — <a href="#privacy">פרטים בהמשך</a>.</p>
   <div class="cta">
     <a class="btn btn-primary" href="#install">איך מתחילים? ↓</a>
     <a class="btn btn-ghost" href="static/install-claude-desktop.html">
@@ -163,12 +183,12 @@
       <div class="card">
         <div class="ic">⚖️</div>
         <h3>כיתות מאוזנות</h3>
-        <p>איזון בגודל, בבנים־בנות ובפיזור גני המוצא. ילדי שילוב מתחלקים בין הכיתות, ואפשר לקבע ילדים מראש.</p>
+        <p>איזון בגודל, ביחס בנים–בנות ובפיזור גני המוצא. תלמידי שילוב מתחלקים בין הכיתות, ואפשר לקבוע מראש ילדים לכיתה מסוימת.</p>
       </div>
       <div class="card">
         <div class="ic">🖐️</div>
-        <h3>לוח גרירה בעברית</h3>
-        <p>קובץ אחד שנפתח בכל דפדפן (גם במחשב בית־ספרי בלי אינטרנט). גוררים ילדים בין כיתות, והמערכת מאזנת סביב מה שקבעתם.</p>
+        <h3>לוח שיבוץ בעברית</h3>
+        <p>קובץ אחד שנפתח בכל דפדפן (גם במחשב בית־ספרי בלי אינטרנט). גוררים בו ילדים בין כיתות, והמערכת שומרת על האיזון בהתאם למה שקבעתם.</p>
       </div>
     </div>
   </div>
@@ -179,7 +199,7 @@
     <h2 class="section-h">מה צריך כדי להתחיל</h2>
     <div class="need">
       <ul>
-        <li><b>מנוי Claude בתשלום</b> — כל מנוי מתאים (Pro, Max, Team או Enterprise). Claude הוא עוזר בינה מלאכותית (בדומה ל-ChatGPT) של חברת Anthropic. כדאי לבדוק אם לבית הספר כבר יש חשבון.</li>
+        <li><b>מנוי Claude בתשלום</b> — מנוי Pro עולה כ-20$ לחודש ואפשר לבטל אחרי חודש (גם Max, Team ו-Enterprise מתאימים). כדאי לבדוק אם לבית הספר כבר יש חשבון. <b>שימו לב:</b> במנוי החינמי של Claude אין תוספים, ולכן הוא לא יספיק.</li>
         <li><b>דפדפן</b> — נכנסים ל-claude.ai ומתחברים. עובד גם באפליקציית Claude למחשב או לנייד — מומלץ לעבוד ממחשב.</li>
         <li><b>קובץ בחירות החברים</b> — אקסל מטופס Google, או קובץ שהכנתם. לא בטוחים שהוא מסודר? זה בסדר — המשבץ ישאל אתכם מה שחסר.</li>
       </ul>
@@ -187,17 +207,39 @@
   </div>
 </section>
 
+<section id="choose">
+  <div class="wrap">
+    <h2 class="section-h">באיזה עוזר AI תעבדו?</h2>
+    <p class="section-sub">רוב המורות עובדות עם Claude. ב-ChatGPT אפשר רק אם לבית הספר יש חשבון ארגוני — יש הוראות מלאות לשניהם.</p>
+    <div class="choose">
+      <a href="#install">
+        <div class="tag">✔ מומלץ לרוב המורות</div>
+        <h3>Claude</h3>
+        <p>מספיק מנוי אישי בתשלום (Pro ומעלה). אם אין לכם שום דבר מותקן — זו הדרך, וגם הכי פשוטה.</p>
+        <span class="go">להוראות ל-Claude ↓</span>
+      </a>
+      <a href="#chatgpt">
+        <div class="tag">רק לחשבון ארגוני</div>
+        <h3>ChatGPT</h3>
+        <p>עובד רק בחשבון Business / Enterprise / Edu של הארגון. חשבון אישי — גם Plus בתשלום — לא מספיק.</p>
+        <span class="go">להוראות ל-ChatGPT ↓</span>
+      </a>
+    </div>
+  </div>
+</section>
+
 <section id="install">
   <div class="wrap">
-    <h2 class="section-h">התקנה — פעם אחת, דקה</h2>
+    <h2 class="section-h">התקנה ב-Claude — פעם אחת, דקה</h2>
     <p class="section-sub">עושים את זה פעם אחת בלבד. אחרי זה המשבץ תמיד שם.</p>
 
     <div class="steps">
       <div class="step">
         <div class="num"></div>
         <div>
-          <h3>נכנסים ל-Claude ופותחים את הפלאגינים</h3>
-          <p>ב-<a href="https://claude.ai">claude.ai</a>, בתפריט הצד לוחצים <b>Customize</b>, ואז את הלשונית <b>Plugins</b>. למעלה לוחצים <b>Add</b> ובוחרים <b>Add marketplace</b>.</p>
+          <h3>נכנסים ל-Claude ופותחים את התוספים</h3>
+          <p>ב-<a href="https://claude.ai">claude.ai</a>, בתפריט הצד לוחצים <b>Customize</b> (התאמה אישית), ואז את הלשונית <b>Plugins</b> (תוספים). למעלה לוחצים <b>Add</b> ובוחרים <b>Add marketplace</b>.</p>
+          <p class="miss">לא מוצאים את <b>Plugins</b>? כנראה שאתם במנוי החינמי — התוספים דורשים מנוי בתשלום (ראו "מה צריך כדי להתחיל" למעלה).</p>
           <img src="images/frame1-add-marketplace.png" alt="לשונית Plugins — פתיחת התפריט Add ובחירת Add marketplace">
         </div>
       </div>
@@ -205,10 +247,10 @@
       <div class="step">
         <div class="num"></div>
         <div>
-          <h3>מדביקים את הכתובת ולוחצים Sync</h3>
-          <p>בשורת הכתובת שבחלון הקטן מדביקים את השם הבא (אפשר להעתיק כאן), ולוחצים <b>Sync</b>:</p>
+          <h3>מדביקים את כתובת ההתקנה ולוחצים Sync</h3>
+          <p>בשדה הריק שבחלון שנפתח מדביקים את כתובת ההתקנה של המשבץ (אפשר להעתיק בלחיצה כאן), ולוחצים <b>Sync</b> (סנכרון — הכפתור בפינה). זו כתובת המשבץ במאגר הציבורי, כמו כתובת של אפליקציה בחנות:</p>
           <div class="copy"><code id="mk">yaniv-golan/claude-lamora</code>
-            <button onclick="copyMk()" id="mkbtn">העתקה</button></div>
+            <button onclick="copyText('mk','mkbtn')" id="mkbtn">העתקה</button></div>
           <img src="images/frame2-sync.png" alt="חלון Add marketplace — הדבקת הכתובת ולחיצה על Sync">
         </div>
       </div>
@@ -217,7 +259,7 @@
         <div class="num"></div>
         <div>
           <h3>לוחצים + על כרטיס המשבץ</h3>
-          <p>ייתכן שתופיע אזהרה באדום באנגלית — זו הודעה סטנדרטית לכל תוסף, אפשר להמשיך. לוחצים על ה-<b>+</b> בכרטיס <b>המשבץ</b>.</p>
+          <p>ייתכן שתופיע אזהרה באדום באנגלית. זו הודעה סטנדרטית לכל תוסף חיצוני: Claude מזכיר שכל תוסף מקבל גישה לשיחה — וזה בדיוק מה שהמשבץ צריך כדי לקרוא את הקובץ שלכם. אפשר להמשיך. לוחצים על ה-<b>+</b> בכרטיס <b>המשבץ</b>.</p>
           <img src="images/frame3-install.png" alt="כרטיס המשבץ עם כפתור הפלוס להתקנה">
         </div>
       </div>
@@ -226,27 +268,71 @@
         <div class="num"></div>
         <div>
           <h3>זהו — מותקן 🎉</h3>
-          <p>מופיעה הודעת אישור. עכשיו פותחים שיחה חדשה, מצרפים את קובץ האקסל וכותבים בעברית: <i>"תעזור לי לשבץ את הכיתות"</i>. המשבץ יזהה לבד וילווה אתכם צעד־אחר־צעד.</p>
+          <p>מופיעה הודעת אישור. עכשיו פותחים שיחה חדשה, מצרפים את קובץ האקסל וכותבים בעברית: <i>"תעזור לי לשבץ את הכיתות"</i>. המשבץ ייכנס לפעולה מעצמו וילווה אתכם צעד־אחר־צעד. אם קלוד לא מזהה, פשוט כתבו: <i>"השתמש בתוסף המשבץ"</i>.</p>
           <img src="images/frame4-installed.png" alt="הודעת אישור: המשבץ הותקן ומוכן לשימוש">
         </div>
       </div>
     </div>
 
     <div class="secondary-cta">
-      <a class="btn btn-ghost" href="static/install-claude-desktop.html">יש לך את אפליקציית Claude למחשב? התקנה בלחיצה אחת →</a>
+      <a class="btn btn-ghost" href="static/install-claude-desktop.html">יש לכם את אפליקציית Claude למחשב? התקנה בלחיצה אחת →</a>
     </div>
   </div>
 </section>
 
-<section>
+<section id="chatgpt">
+  <div class="wrap">
+    <h2 class="section-h">התקנה ב-ChatGPT</h2>
+    <p class="section-sub">אותו כלי, אותה כתובת — עם הבדל אחד חשוב לגבי סוג החשבון.</p>
+
+    <div class="gate">
+      <b>קודם כול — בדקו את סוג החשבון.</b> ChatGPT מאפשר תוספים כאלה <b>רק בחשבון ארגוני</b>
+      (Business / Enterprise / Edu / Healthcare). בחשבון אישי — כולל Plus בתשלום — האפשרות הזאת
+      פשוט לא קיימת ולא תופיע. לא בטוחים? שאלו את רכז/ת התקשוב בבית הספר. אין חשבון ארגוני?
+      <a href="#install">עבדו עם Claude</a> — זו הדרך שמתאימה לרוב המורות.
+    </div>
+
+    <div class="route"><span class="lbl">דרך א׳ · מומלץ · מתעדכן לבד</span>אפליקציית ChatGPT למחשב</div>
+    <p>אם יש לכם את אפליקציית ChatGPT למחשב, זו הדרך הפשוטה — <b>ובדיוק אותה כתובת כמו ב-Claude</b>:</p>
+    <ol style="margin:12px 22px 0; padding-inline-start:6px; line-height:1.9; color:var(--body)">
+      <li>פותחים את אפליקציית ChatGPT למחשב ונכנסים ללשונית <b>Plugins</b> (תוספים).</li>
+      <li>לוחצים <b>Create ⌄</b> ובוחרים <b>Add marketplace</b>.</li>
+      <li>מדביקים את אותה כתובת ההתקנה (אפשר להעתיק בלחיצה):
+        <div class="copy"><code id="mk2">yaniv-golan/claude-lamora</code>
+          <button onclick="copyText('mk2','mkbtn2')" id="mkbtn2">העתקה</button></div>
+      </li>
+      <li>לוחצים <b>Install</b> — וזהו. העדכונים מגיעים לבד ברענון התוספים, בלי להתקין מחדש.</li>
+    </ol>
+
+    <div class="route"><span class="lbl">דרך ב׳ · בדפדפן · בלי אפליקציה</span>העלאה ידנית של הקובץ</div>
+    <p>אין אפליקציה? אפשר גם מהדפדפן. מורידים את קובץ ה-zip של המשבץ (הקובץ ששמו מתחיל
+      ב-<code style="direction:ltr;display:inline-block">hameshabetz-skill</code>)
+      מ<a href="https://github.com/yaniv-golan/claude-lamora/releases/latest">עמוד ההורדות</a>, ואז:</p>
+    <div align="center">
+      <img src="images/chatgpt1-upload.png" alt="עמוד Skills ב-ChatGPT — פתיחת תפריט ה־＋ ובחירת Upload from your computer"
+           style="width:100%;max-width:660px;border:1px solid var(--line);border-radius:12px;margin:8px auto;display:block">
+      <div style="color:var(--muted);font-size:13.5px;margin-bottom:14px">① בלשונית <b>Skills</b> לוחצים <b>+</b>, ② בוחרים <b>Upload from your computer</b>.</div>
+      <img src="images/chatgpt2-uploaded.png" alt="חלון Upload a skill — הקובץ hameshabetz-skill.zip נקלט עם סימן וי ירוק"
+           style="width:100%;max-width:660px;border:1px solid var(--line);border-radius:12px;margin:8px auto;display:block">
+      <div style="color:var(--muted);font-size:13.5px">✓ גוררים את הקובץ — סימן ✓ ירוק מאשר שהמשבץ נקלט.</div>
+    </div>
+    <p class="miss">בהעלאה הידנית הכלי <b>לא מתעדכן לבד</b> — כשתצא גרסה חדשה צריך להוריד ולהעלות שוב. בדרך א׳ (אפליקציה) העדכון אוטומטי.</p>
+
+    <p style="text-align:center;color:var(--muted);font-size:14px;margin-top:24px">
+      ל-ChatGPT אין כפתור התקנה בלחיצה אחת מהאתר (רק ל-Claude יש) — ההתקנה נעשית בתוך ChatGPT עצמו.
+    </p>
+  </div>
+</section>
+
+<section id="privacy">
   <div class="wrap">
     <div class="privacy">
       <h2>פרטיות — חשוב 🔒</h2>
-      <p>המידע על הילדים נמצא רק בשני מקומות: אצלכם במחשב, או בשיחה ב-Claude (השרתים של Anthropic) — בדיוק כמו כל קובץ שמצרפים לצ'אט. למשבץ עצמו אין שרת משלו, והוא לא שומר שמות או פרטים של ילדים בשום מקום.</p>
+      <p>המידע על הילדים נמצא רק בשני מקומות: אצלכם במחשב, או בתוך השיחה עם עוזר ה-AI (Claude או ChatGPT — כלומר בשרתים של Anthropic או OpenAI), בדיוק כמו כל קובץ שמצרפים לצ'אט. למשבץ עצמו אין שרת משלו, והוא לא שומר שמות או פרטים של ילדים בשום מקום.</p>
       <ul>
         <li>אין חיפוש שמות באינטרנט ואין העברה לשום שירות חיצוני אחר.</li>
         <li>לוח הסקירה וקובצי האקסל נשמרים אצלכם במחשב.</li>
-        <li>הקבצים הסופיים מכילים שמות של ילדים — לשמור עליהם כמו על כל מסמך רגיש בבית הספר.</li>
+        <li>הקבצים הסופיים מכילים שמות של ילדים — לשמור עליהם כמו על כל מסמך רגיש בבית הספר, וכמו בכל כלי דיגיטלי עם פרטי תלמידים כדאי לתאם עם הנהלת בית הספר.</li>
       </ul>
     </div>
   </div>
@@ -265,7 +351,7 @@
       <details><summary>עשיתי שינוי ידני בלוח — אפשר לאזן מחדש?</summary>
         <p>כן. שומרים את הלוח לקובץ, מחזירים אותו לשיחה וכותבים "תמשיך מכאן" — והמשבץ ממשיך מאיפה שהייתם, מאזן סביב השינויים שעשיתם.</p></details>
       <details><summary>אפשר להשתמש ב-ChatGPT במקום?</summary>
-        <p>אפשר, אם לארגון או לבית הספר יש מנוי ChatGPT עסקי (Business / Enterprise / Edu) — בחשבון אישי רגיל זה עדיין לא זמין. באפליקציית ChatGPT למחשב מוסיפים אותו עם <b>אותה כתובת בדיוק</b>: נכנסים ל-Plugins, בוחרים Add marketplace, ומדביקים <code style="direction:ltr;display:inline-block">yaniv-golan/claude-lamora</code>. לרוב המורים הדרך הפשוטה תישאר Claude, כמו למעלה.</p></details>
+        <p>כן — אבל רק אם לבית הספר יש חשבון ChatGPT ארגוני (Business / Enterprise / Edu). בחשבון אישי, גם Plus בתשלום, זה לא יעבוד. ההוראות המלאות (שתי דרכים, עם תמונות) נמצאות ב<a href="#chatgpt">קטע ההתקנה ב-ChatGPT</a>. לרוב המורות הדרך הפשוטה תישאר Claude.</p></details>
     </div>
   </div>
 </section>
@@ -283,16 +369,18 @@
 <footer>
   <div class="wrap">
     קלוד־למורה · המשבץ — כלי קוד־פתוח (MIT) למורות ולצוותי חינוך בישראל.<br>
-    מפתח/ת או סקרן/ית? <a href="https://github.com/yaniv-golan/claude-lamora">הקוד וההוראות הטכניות ב-GitHub</a>.
+    מפתחים או סקרנים? <a href="https://github.com/yaniv-golan/claude-lamora">הקוד וההוראות הטכניות ב-GitHub</a> (לא חובה למורות — זה למי שרוצה להציץ מתחת למכסה המנוע).
   </div>
 </footer>
 
 <script>
-  function copyMk(){
-    const t="yaniv-golan/claude-lamora";
-    const done=()=>{const b=document.getElementById('mkbtn'); b.textContent="הועתק ✓"; setTimeout(()=>b.textContent="העתקה",1600);};
+  function copyText(codeId, btnId){
+    const el=document.getElementById(codeId);
+    const b=document.getElementById(btnId);
+    const t=el.textContent.trim();
+    const done=()=>{ b.textContent="הועתק ✓"; setTimeout(()=>b.textContent="העתקה",1600); };
     if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(done).catch(done);}
-    else{const r=document.createRange(); r.selectNode(document.getElementById('mk'));
+    else{const r=document.createRange(); r.selectNode(el);
       getSelection().removeAllRanges(); getSelection().addRange(r); try{document.execCommand('copy');}catch(e){} done();}
   }
 </script>
