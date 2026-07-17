@@ -1,5 +1,17 @@
 # Changelog
 
+## Unreleased
+
+### ChatGPT parity
+- Documented that ChatGPT (desktop app, Business/Enterprise/Edu/Healthcare) consumes this
+  Claude marketplace repo **directly** — **Plugins → Add marketplace → `yaniv-golan/claude-lamora`**
+  → Install — verified live. This is the real "equivalent target": same address as Claude, and
+  updatable (`codex plugin marketplace upgrade` / refresh / restart), unlike the frozen zip upload.
+  README (Hebrew + English) and the landing-page FAQ now lead with it; zip upload stays as the
+  web fallback.
+- Plugin manifest: added `homepage` and `interface.websiteURL` so ChatGPT's plugin detail page
+  shows the landing page instead of "Website: Unavailable" (additive; Claude ignores `interface`).
+
 ## 1.3.0 — 2026-07-16
 
 ### Packaging

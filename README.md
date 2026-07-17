@@ -107,11 +107,16 @@
 (החינמי או Plus) האפשרות הזאת עדיין לא קיימת — ואז הדרך הפשוטה לכולם היא פשוט לעבוד
 עם Claude, כמו למעלה.
 
-יש חשבון מתאים? מורידים את קובץ ה-zip של המשבץ (הקובץ ששמו מתחיל ב-`hameshabetz-skill`)
-מ[עמוד ההורדות](https://github.com/yaniv-golan/claude-lamora/releases/latest), ואז בתוך
-ChatGPT נכנסים ללשונית **Skills**, לוחצים על כפתור ה-**+** בפינה, בוחרים **Upload from
-your computer** וגוררים לשם את הקובץ. מכאן העבודה זהה לגמרי — מצרפים את קובץ האקסל,
-עונים על השאלות, ומקבלים לוח ואקסל.
+**יש חשבון מתאים ואפליקציית ChatGPT למחשב? הכי פשוט — אותה כתובת כמו ב-Claude:**
+נכנסים ללשונית **Plugins**, בוחרים **Create ⌄ ‹ Add marketplace**, מדביקים את
+`yaniv-golan/claude-lamora` (בדיוק הכתובת מהשלבים למעלה — ChatGPT קורא אותה ישירות),
+ולוחצים **Install**. זהו. עדכונים מגיעים ברענון הפלאגינים, בלי צורך להתקין מחדש.
+
+**מעדיפים לעבוד בדפדפן?** מורידים את קובץ ה-zip של המשבץ (הקובץ ששמו מתחיל
+ב-`hameshabetz-skill`) מ[עמוד ההורדות](https://github.com/yaniv-golan/claude-lamora/releases/latest),
+ואז בתוך ChatGPT נכנסים ללשונית **Skills**, לוחצים על כפתור ה-**+** בפינה, בוחרים
+**Upload from your computer** וגוררים לשם את הקובץ. מכאן העבודה זהה לגמרי — מצרפים את
+קובץ האקסל, עונים על השאלות, ומקבלים לוח ואקסל.
 
 <div align="center">
 
@@ -252,11 +257,22 @@ into the **Search or Paste Link** box.
 `hameshabetz-skill-*.zip` asset from the [latest release](https://github.com/yaniv-golan/claude-lamora/releases/latest)
 and extract the `hameshabetz/` folder into `~/.codex/skills/`.
 
-**ChatGPT (Business / Enterprise / Edu / Healthcare)** — ChatGPT Skills use the same Agent
-Skills standard. Download the `hameshabetz-skill-*.zip` asset from the [latest release](https://github.com/yaniv-golan/claude-lamora/releases/latest)
-and upload it via **Skills → `+` → Upload from your computer**. The code-interpreter sandbox runs the Python
-pipeline and produces the board and Excel files. *Not available on Free / Plus / Go plans, and
-Skills don't sync between the desktop and web apps — add it on each separately.*
+**ChatGPT (Business / Enterprise / Edu / Healthcare)** — ChatGPT reads this Claude marketplace
+repo directly (verified live on the desktop app), so the same address works:
+
+- **Desktop app (recommended — updatable):** **Plugins → Create ⌄ → Add marketplace**, enter
+  `yaniv-golan/claude-lamora`, then **Install**. ChatGPT parses the repo's `.claude-plugin/`
+  manifests as-is — no ChatGPT-specific files needed — and registers the bundled skill. Update
+  later via `codex plugin marketplace upgrade`, the Plugins refresh action, or an app restart.
+- **Web (Skills upload):** download the `hameshabetz-skill-*.zip` asset from the
+  [latest release](https://github.com/yaniv-golan/claude-lamora/releases/latest) and upload it via
+  **Skills → `+` → Upload from your computer**. Simpler, but frozen — re-upload to update.
+
+The code-interpreter sandbox runs the Python pipeline (board + Excel export work; the CP-SAT solver
+installs where the package proxy allows it, otherwise the offline engine runs). *Not on Free / Plus /
+Go plans; plugins/skills don't sync between the desktop and web apps — add on each separately. There
+is no web-page one-click deep link for ChatGPT (unlike the `claude://` button) — the install happens
+inside the app's Plugins UI.*
 
 **Manual (Windsurf, OpenClaw, etc.)** — extract the same `hameshabetz/` folder into your
 project's `.agents/skills/` or your user-level `~/.agents/skills/`.
