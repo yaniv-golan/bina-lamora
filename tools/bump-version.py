@@ -109,6 +109,12 @@ def main() -> None:
         ".cursor-plugin/plugin.json",
         set_json_key(root / ".cursor-plugin/plugin.json", "version", new_version),
     )
+    # 5b. Codex/ChatGPT native plugin (optional). The native marketplace
+    # (.agents/plugins/marketplace.json) carries no version — the plugin does.
+    record(
+        "hameshabetz/.codex-plugin/plugin.json",
+        set_json_key(root / "hameshabetz/.codex-plugin/plugin.json", "version", new_version),
+    )
     # 6/7. Each skill's SKILL.md frontmatter + optional per-skill VERSION file
     skills_root = root / "hameshabetz" / "skills"
     if skills_root.is_dir():

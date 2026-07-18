@@ -15,9 +15,11 @@ The version appears in these files (all managed by the bump script):
 3. `hameshabetz/.claude-plugin/plugin.json` — `"version"` field
 4. `.claude-plugin/marketplace.json` — `metadata.version` (if marketplace format enabled)
 5. `.cursor-plugin/plugin.json` — `"version"` field (if Cursor format enabled)
-6. `hameshabetz/skills/*/SKILL.md` — `metadata.version` in YAML frontmatter
-7. `hameshabetz/skills/*/VERSION` — copied from root (if present)
-8. `.agents/skills/` copies (if they exist) — in this repo `.agents/skills/hameshabetz`
+6. `hameshabetz/.codex-plugin/plugin.json` — `"version"` field (native Codex/ChatGPT plugin;
+   the native marketplace `.agents/plugins/marketplace.json` carries no version, the plugin does)
+7. `hameshabetz/skills/*/SKILL.md` — `metadata.version` in YAML frontmatter
+8. `hameshabetz/skills/*/VERSION` — copied from root (if present)
+9. `.agents/skills/` copies (if they exist) — in this repo `.agents/skills/hameshabetz`
    is a **symlink** to the canonical skill, so it tracks the version automatically and
    the bump script does not need to touch it
 

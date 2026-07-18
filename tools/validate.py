@@ -132,6 +132,55 @@ def validate_agents_skills() -> None:
             err(f".agents/skills/{entry.name}: does not resolve to a skill (missing SKILL.md)")
 
 
+def validate_codex_plugin(canonical_version: str | None) -> None:
+    """Validate the optional native Codex/ChatGPT plugin manifest."""
+    path = ROOT / "hameshabetz" / ".codex-plugin" / "plugin.json"
+    if not path.exists():
+        return  # Codex format not enabled — nothing to check.
+    manifest = load_json(path)
+    if manifest is None:
+        return
+    if not manifest.get("name"):
+        err("hameshabetz/.codex-plugin/plugin.json: missing 'name'")
+    if canonical_version and manifest.get("version") != canonical_version:
+        err(
+            f"hameshabetz/.codex-plugin/plugin.json: version '{manifest.get('version')}' "
+            f"does not match VERSION ({canonical_version})"
+        )
+    # Codex convention: skills path is relative to the plugin dir (hameshabetz/).
+    skills_rel = manifest.get("skills")
+    if not skills_rel:
+        err("hameshabetz/.codex-plugin/plugin.json: missing 'skills' path")
+    elif not (path.parent.parent / skills_rel).resolve().is_dir():
+        err(f"hameshabetz/.codex-plugin/plugin.json: skills directory not found: {skills_rel}")
+
+
+def validate_codex_marketplace() -> None:
+    """Validate the optional native Codex marketplace (.agents/plugins/marketplace.json)."""
+    path = ROOT / ".agents" / "plugins" / "marketplace.json"
+    if not path.exists():
+        return  # native Codex marketplace not enabled — nothing to check.
+    mk = load_json(path)
+    if mk is None:
+        return
+    if not mk.get("name"):
+        err(".agents/plugins/marketplace.json: missing 'name'")
+    plugins = mk.get("plugins")
+    if not isinstance(plugins, list) or not plugins:
+        err(".agents/plugins/marketplace.json: 'plugins' must be a non-empty array")
+        return
+    for entry in plugins:
+        name = entry.get("name", "<unnamed>")
+        source = entry.get("source")
+        if not isinstance(source, dict):
+            err(f".agents/plugins/marketplace.json: plugin '{name}' has no 'source' object")
+            continue
+        # For local/git-subdir sources, 'path' points at the plugin dir within the repo.
+        rel = source.get("path")
+        if rel and not (ROOT / rel).resolve().is_dir():
+            err(f".agents/plugins/marketplace.json: plugin '{name}' path not found: {rel}")
+
+
 def main() -> None:
     marketplace_path = ROOT / ".claude-plugin" / "marketplace.json"
     mk = load_json(marketplace_path)
@@ -154,6 +203,8 @@ def main() -> None:
     canonical_version = version_file.read_text(encoding="utf-8").strip() if version_file.exists() else None
     validate_cursor_plugin(canonical_version)
     validate_agents_skills()
+    validate_codex_plugin(canonical_version)
+    validate_codex_marketplace()
 
     if errors:
         print(f"\n{len(errors)} problem(s) found.", file=sys.stderr)

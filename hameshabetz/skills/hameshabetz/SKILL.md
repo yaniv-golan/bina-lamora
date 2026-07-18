@@ -3,7 +3,7 @@ name: hameshabetz
 description: המשבץ (HaMeshabetz) — assigns incoming students (e.g., ~100 first-graders) into balanced classes from a Google Forms friend-choice export. Handles Hebrew name reconciliation, hard/soft constraints (every child with at least one chosen friend, one special-ed "mishalevet" child per class, kindergarten/gan spread, class sizes), CP-SAT optimization, an RTL drag-and-drop review board for counselors, and Excel rosters. Use when the user mentions class placement, "שיבוץ כיתות", splitting a grade into classes, friend choices from a form, sociometric class assignment, or wants to rebalance/re-solve after manual edits.
 metadata:
   author: Yaniv Golan (lool ventures)
-  version: "1.3.0"
+  version: "1.4.0"
 ---
 
 # Class Builder (שיבוץ כיתות)

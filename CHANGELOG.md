@@ -1,6 +1,17 @@
 # Changelog
 
-## Unreleased
+## 1.4.0 — 2026-07-19
+
+### Native ChatGPT / Codex plugin
+- Added first-class Codex/ChatGPT manifests so the repo is a native plugin in that ecosystem,
+  not just legacy-compatible: `hameshabetz/.codex-plugin/plugin.json` (with `skills: "./skills/"`
+  and a Codex `interface` block — displayName, category, brandColor, string `defaultPrompt`,
+  websiteURL) and the native marketplace `.agents/plugins/marketplace.json` (`git-subdir` source).
+  The Claude `.claude-plugin/` manifests are unchanged and still honored by older clients.
+- Version tooling: `tools/bump-version.py` now propagates to the Codex plugin manifest, and
+  `tools/validate.py` validates both the Codex plugin and the native marketplace (structure +
+  version consistency). Schema verified against codex-cli 0.144.4.
+- Install: `codex plugin marketplace add yaniv-golan/claude-lamora` — same address as Claude.
 
 ### Landing page
 - Reworked `site/index.html` after an adversarial audience review: added an assistant

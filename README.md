@@ -257,13 +257,16 @@ into the **Search or Paste Link** box.
 `hameshabetz-skill-*.zip` asset from the [latest release](https://github.com/yaniv-golan/claude-lamora/releases/latest)
 and extract the `hameshabetz/` folder into `~/.codex/skills/`.
 
-**ChatGPT (Business / Enterprise / Edu / Healthcare)** — ChatGPT reads this Claude marketplace
-repo directly (verified live on the desktop app), so the same address works:
+**ChatGPT / Codex (Business / Enterprise / Edu / Healthcare)** — this repo ships **native
+Codex/ChatGPT manifests** (`hameshabetz/.codex-plugin/plugin.json` + `.agents/plugins/marketplace.json`)
+alongside the Claude ones, so it's a first-class plugin in both ecosystems from the same address:
 
-- **Desktop app (recommended — updatable):** **Plugins → Create ⌄ → Add marketplace**, enter
-  `yaniv-golan/claude-lamora`, then **Install**. ChatGPT parses the repo's `.claude-plugin/`
-  manifests as-is — no ChatGPT-specific files needed — and registers the bundled skill. Update
-  later via `codex plugin marketplace upgrade`, the Plugins refresh action, or an app restart.
+- **Codex CLI:** `codex plugin marketplace add yaniv-golan/claude-lamora`, then
+  `codex plugin install hameshabetz@claude-lamora`.
+- **ChatGPT desktop app (updatable):** **Plugins → Create ⌄ → Add marketplace**, enter
+  `yaniv-golan/claude-lamora`, then **Install**. Update later via `codex plugin marketplace upgrade`,
+  the Plugins refresh action, or an app restart. *(The legacy `.claude-plugin/` manifests are also
+  honored, so older clients work too.)*
 - **Web (Skills upload):** download the `hameshabetz-skill-*.zip` asset from the
   [latest release](https://github.com/yaniv-golan/claude-lamora/releases/latest) and upload it via
   **Skills → `+` → Upload from your computer**. Simpler, but frozen — re-upload to update.

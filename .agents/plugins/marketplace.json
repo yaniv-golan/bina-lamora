@@ -1,0 +1,22 @@
+{
+  "name": "claude-lamora",
+  "interface": {
+    "displayName": "קלוד-למורה"
+  },
+  "plugins": [
+    {
+      "name": "hameshabetz",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/yaniv-golan/claude-lamora.git",
+        "path": "./hameshabetz",
+        "ref": "main"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "education"
+    }
+  ]
+}
