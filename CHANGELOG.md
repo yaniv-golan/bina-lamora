@@ -1,5 +1,17 @@
 # Changelog
 
+## Unreleased
+
+### Renamed: claude-lamora → bina-lamora
+- Renamed the marketplace/repo/brand from **claude-lamora / קלוד־למורה** to
+  **bina-lamora / בינה־למורה** ("AI for the teacher"), now that the tool runs on both
+  Claude and ChatGPT and a vendor-specific name no longer fits. The skill itself
+  (`hameshabetz` / המשבץ) is unchanged. The install address is now
+  `yaniv-golan/bina-lamora`, and the site moves to
+  `https://yaniv-golan.github.io/bina-lamora/`. Manifests, README, landing page,
+  mockups, OG image, and the demo GIF were all updated. (The `.claude-plugin/` and
+  `.codex-plugin/` directory names are format specs and intentionally unchanged.)
+
 ## 1.4.0 — 2026-07-19
 
 ### Native ChatGPT / Codex plugin
@@ -11,7 +23,7 @@
 - Version tooling: `tools/bump-version.py` now propagates to the Codex plugin manifest, and
   `tools/validate.py` validates both the Codex plugin and the native marketplace (structure +
   version consistency). Schema verified against codex-cli 0.144.4.
-- Install: `codex plugin marketplace add yaniv-golan/claude-lamora` — same address as Claude.
+- Install: `codex plugin marketplace add yaniv-golan/bina-lamora` — same address as Claude.
 
 ### Landing page
 - Reworked `site/index.html` after an adversarial audience review: added an assistant
@@ -25,7 +37,7 @@
 
 ### ChatGPT parity
 - Documented that ChatGPT (desktop app, Business/Enterprise/Edu/Healthcare) consumes this
-  Claude marketplace repo **directly** — **Plugins → Add marketplace → `yaniv-golan/claude-lamora`**
+  Claude marketplace repo **directly** — **Plugins → Add marketplace → `yaniv-golan/bina-lamora`**
   → Install — verified live. This is the real "equivalent target": same address as Claude, and
   updatable (`codex plugin marketplace upgrade` / refresh / restart), unlike the frozen zip upload.
   README (Hebrew + English) and the landing-page FAQ now lead with it; zip upload stays as the
@@ -55,7 +67,7 @@
 
 ## 1.2.0 — 2026-07-15
 
-First public release of **המשבץ (hameshabetz)** in the **קלוד-למורה (claude-lamora)**
+First public release of **המשבץ (hameshabetz)** in the **בינה־למורה (bina-lamora)**
 marketplace. Highlights of the v1.x line that led here:
 
 ### Board (לוח הסקירה)

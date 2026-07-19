@@ -2,8 +2,8 @@
   "name": "hameshabetz",
   "version": "1.4.0",
   "description": "המשבץ — שיבוץ שכבה לכיתות מאוזנות מתוך טופס בחירת חברים: פיוס שמות בעברית, אילוצים (לא-עם, עוגנים, שילוב, איזון גנים ומגדר), אופטימיזציית CP-SAT, לוח גרירה בעברית ואקסל סופי.",
-  "homepage": "https://yaniv-golan.github.io/claude-lamora/",
-  "repository": "https://github.com/yaniv-golan/claude-lamora",
+  "homepage": "https://yaniv-golan.github.io/bina-lamora/",
+  "repository": "https://github.com/yaniv-golan/bina-lamora",
   "license": "MIT",
   "keywords": [
     "שיבוץ-כיתות",
@@ -23,6 +23,6 @@
     "category": "education",
     "brandColor": "#cc7a58",
     "defaultPrompt": "עזור לי לשבץ את השכבה לכיתות מאוזנות מתוך קובץ בחירות החברים",
-    "websiteURL": "https://yaniv-golan.github.io/claude-lamora/"
+    "websiteURL": "https://yaniv-golan.github.io/bina-lamora/"
   }
 }

@@ -46,7 +46,7 @@ jobs:
           # link always resolves (used by the landing page's direct-download button).
           cp "hameshabetz-skill-${version}.zip" "hameshabetz-skill.zip"
           # Full marketplace archive (all universal-repo formats).
-          zip -r "claude-lamora-${version}.zip" \
+          zip -r "bina-lamora-${version}.zip" \
             .claude-plugin .cursor-plugin .agents hameshabetz \
             README.md LICENSE CHANGELOG.md VERSION VERSIONING.md \
             -x '*/__pycache__/*'
@@ -55,10 +55,10 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          name: קלוד-למורה ${{ github.ref_name }}
+          name: בינה־למורה ${{ github.ref_name }}
           generate_release_notes: true
           files: |
             hameshabetz-*.zip
             hameshabetz-skill-*.zip
             hameshabetz-skill.zip
-            claude-lamora-*.zip
+            bina-lamora-*.zip

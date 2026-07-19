@@ -1,14 +1,14 @@
 {
-  "name": "claude-lamora",
+  "name": "bina-lamora",
   "interface": {
-    "displayName": "קלוד-למורה"
+    "displayName": "בינה־למורה"
   },
   "plugins": [
     {
       "name": "hameshabetz",
       "source": {
         "source": "git-subdir",
-        "url": "https://github.com/yaniv-golan/claude-lamora.git",
+        "url": "https://github.com/yaniv-golan/bina-lamora.git",
         "path": "./hameshabetz",
         "ref": "main"
       },

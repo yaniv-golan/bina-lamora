@@ -6,8 +6,8 @@
     "name": "Yaniv Golan",
     "email": "yaniv@golan.name"
   },
-  "repository": "https://github.com/yaniv-golan/claude-lamora",
-  "homepage": "https://yaniv-golan.github.io/claude-lamora/",
+  "repository": "https://github.com/yaniv-golan/bina-lamora",
+  "homepage": "https://yaniv-golan.github.io/bina-lamora/",
   "license": "MIT",
   "keywords": [
     "שיבוץ-כיתות",
@@ -21,6 +21,6 @@
   ],
   "skills": "./skills",
   "interface": {
-    "websiteURL": "https://yaniv-golan.github.io/claude-lamora/"
+    "websiteURL": "https://yaniv-golan.github.io/bina-lamora/"
   }
 }

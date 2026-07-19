@@ -1,14 +1,14 @@
 {
-  "name": "claude-lamora",
+  "name": "bina-lamora",
   "version": "1.4.0",
-  "displayName": "קלוד-למורה",
+  "displayName": "בינה־למורה",
   "description": "Claude plugin marketplace for Israeli educators. First skill: hameshabetz (המשבץ) — sociometric class placement with Hebrew name reconciliation, CP-SAT optimization, an RTL drag-and-drop review board, and Excel rosters.",
   "author": {
     "name": "Yaniv Golan",
     "email": "yaniv@golan.name"
   },
   "license": "MIT",
-  "repository": "https://github.com/yaniv-golan/claude-lamora",
+  "repository": "https://github.com/yaniv-golan/bina-lamora",
   "source": "hameshabetz/skills/hameshabetz",
   "formats": {
     "claude-plugin": true,

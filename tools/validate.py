@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the claude-lamora marketplace and its plugins.
+"""Validate the bina-lamora marketplace and its plugins.
 
 Checks the structural invariants that the Claude plugin loader relies on:
   * ``.claude-plugin/marketplace.json`` parses and has the required fields.

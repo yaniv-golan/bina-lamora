@@ -1,5 +1,5 @@
 {
-  "name": "claude-lamora",
+  "name": "bina-lamora",
   "owner": {
     "name": "Yaniv Golan",
     "email": "yaniv@golan.name"
@@ -8,7 +8,7 @@
     "description": "המשבץ — שיבוץ שכבה לכיתות מאוזנות מתוך טופס בחירת חברים: פיוס שמות בעברית, אילוצים (לא-עם, עוגנים, שילוב, איזון גנים ומגדר), אופטימיזציית CP-SAT, לוח גרירה בעברית ואקסל סופי.",
     "version": "1.4.0",
     "pluginRoot": "./hameshabetz",
-    "displayName": "קלוד-למורה"
+    "displayName": "בינה־למורה"
   },
   "plugins": [
     {
